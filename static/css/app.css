@@ -1,0 +1,436 @@
+/* ================================================
+   SimuCast — app.css
+   Sidebar layout used by all 4 platform steps.
+   Import AFTER main.css.
+   ================================================ */
+
+/* ── LAYOUT ───────────────────────────────────── */
+.app-body {
+  display: flex;
+  min-height: 100vh;
+  background: #f0f2f5;
+}
+
+/* ── SIDEBAR ──────────────────────────────────── */
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  background: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1.2rem;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  z-index: 50;
+  overflow-y: auto;
+}
+
+/* Logo */
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin-bottom: 1.6rem;
+}
+.sidebar-logo-icon {
+  width: 44px; height: 44px;
+  background: var(--orange);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.sidebar-logo-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.2;
+}
+.sidebar-logo-sub {
+  font-size: .72rem;
+  color: var(--gray);
+  font-weight: 400;
+}
+
+/* Auth buttons */
+.sidebar-auth {
+  display: flex;
+  gap: .6rem;
+  margin-bottom: 2rem;
+}
+.btn-guest {
+  flex: 1;
+  padding: .5rem .6rem;
+  border: 1.5px solid var(--orange);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--orange);
+  font-family: inherit;
+  font-size: .78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s;
+}
+.btn-guest:hover { background: var(--orange-lt); }
+
+.btn-login {
+  flex: 1;
+  padding: .5rem .6rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--orange);
+  color: white;
+  font-family: inherit;
+  font-size: .78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s;
+}
+.btn-login:hover { background: var(--orange-d); }
+
+/* Nav items */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+  flex: 1;
+}
+.sidebar-nav-item {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  padding: .75rem 1rem;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: .9rem;
+  font-weight: 500;
+  color: var(--gray);
+  transition: all .2s;
+}
+.sidebar-nav-item:hover:not(.disabled) {
+  background: var(--orange-lt);
+  color: var(--orange);
+}
+.sidebar-nav-item.active {
+  background: var(--orange-lt);
+  color: var(--orange);
+  font-weight: 600;
+}
+.sidebar-nav-item.active .nav-icon { color: var(--orange); }
+.sidebar-nav-item.disabled {
+  opacity: .45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.nav-icon {
+  width: 20px; height: 20px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: var(--gray);
+}
+.sidebar-nav-item.active .nav-icon { color: var(--orange); }
+
+/* Demo callout */
+.sidebar-demo {
+  margin-top: auto;
+  background: var(--orange-lt);
+  border: 1px solid #fed7aa;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+.sidebar-demo p {
+  font-size: .8rem;
+  color: var(--navy);
+  line-height: 1.5;
+  margin-bottom: .7rem;
+}
+.btn-watch-demo {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  background: white;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  padding: .45rem .9rem;
+  font-family: inherit;
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--navy);
+  cursor: pointer;
+  transition: all .2s;
+  width: 100%;
+  justify-content: center;
+}
+.btn-watch-demo:hover { border-color: var(--orange); color: var(--orange); }
+
+/* Version */
+.sidebar-version {
+  display: flex;
+  flex-direction: column;
+  gap: .1rem;
+  font-size: .7rem;
+  color: #9ca3af;
+  padding-top: .5rem;
+}
+
+/* ── MAIN AREA ────────────────────────────────── */
+.app-main {
+  margin-left: 260px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ── STEP PROGRESS BAR ────────────────────────── */
+.step-bar {
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  padding: 0 2.5rem;
+  height: 80px;
+  gap: 0;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+.step-item {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  flex-shrink: 0;
+}
+
+.step-circle {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .85rem; font-weight: 700;
+  flex-shrink: 0;
+  transition: all .3s;
+}
+
+/* Active step */
+.step-item--active .step-circle {
+  background: var(--orange);
+  color: white;
+  box-shadow: 0 0 0 4px #fed7aa;
+}
+.step-item--active .step-status { color: var(--orange); font-weight: 600; }
+.step-item--active .step-label  { color: var(--navy);   font-weight: 700; }
+
+/* Done step */
+.step-item--done .step-circle {
+  background: var(--orange);
+  color: white;
+}
+.step-item--done .step-status { color: #9ca3af; }
+.step-item--done .step-label  { color: #6b7280; font-weight: 500; }
+
+/* Pending step */
+.step-item--pending .step-circle {
+  background: #f3f4f6;
+  color: #9ca3af;
+  border: 2px solid #e5e7eb;
+}
+.step-item--pending .step-status { color: #9ca3af; }
+.step-item--pending .step-label  { color: #9ca3af; font-weight: 500; }
+
+.step-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+.step-status { font-size: .72rem; }
+.step-label  { font-size: .88rem; white-space: nowrap; }
+
+/* Connector line between steps */
+.step-connector {
+  flex: 1;
+  height: 2px;
+  background: #e5e7eb;
+  margin: 0 .8rem;
+  min-width: 30px;
+  transition: background .3s;
+}
+.step-connector--done { background: var(--orange); }
+
+/* ── PAGE CONTENT ─────────────────────────────── */
+.app-content {
+  flex: 1;
+  padding: 2.5rem;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;   /* ← add this */
+}
+
+/* Page title block */
+.page-title    { font-size: 1.9rem; font-weight: 800; color: var(--navy); margin-bottom: .4rem; }
+.page-subtitle { font-size: .95rem; color: var(--gray); margin-bottom: 2rem; }
+
+/* ── CARDS ────────────────────────────────────── */
+.app-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 6px rgba(0,0,0,.05);
+}
+
+/* Numbered card header */
+.card-step-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.8rem;
+}
+.card-step-num {
+  width: 36px; height: 36px;
+  background: var(--orange);
+  color: white;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: .9rem;
+  flex-shrink: 0;
+}
+.card-step-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+/* ── FORM ELEMENTS (app style) ────────────────── */
+.app-label {
+  display: block;
+  font-size: .88rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: .5rem;
+}
+.app-input {
+  width: 100%;
+  padding: .75rem 1rem;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: .93rem;
+  color: var(--navy);
+  outline: none;
+  transition: border-color .2s;
+  background: white;
+}
+.app-input:focus { border-color: var(--orange); }
+.app-input::placeholder { color: #9ca3af; }
+
+/* Drop zone */
+.drop-zone {
+  border: 2px dashed var(--orange);
+  border-radius: 12px;
+  background: #fffdf9;
+  padding: 3rem 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: background .2s;
+}
+.drop-zone:hover { background: var(--orange-lt); }
+.drop-zone-icon  { font-size: 2.5rem; margin-bottom: .8rem; color: #9ca3af; display: block; }
+.drop-zone-text  { font-size: .93rem; color: var(--navy); font-weight: 500; }
+.drop-zone-sub   { font-size: .78rem; color: #9ca3af; margin-top: .3rem; }
+
+/* Checkbox row */
+.checkbox-row {
+  display: flex;
+  align-items: flex-start;
+  gap: .8rem;
+  padding: 1.2rem 1.5rem;
+  background: #fafafa;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.checkbox-row input[type="checkbox"] {
+  margin-top: .15rem;
+  width: 17px; height: 17px;
+  accent-color: var(--orange);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.checkbox-row-text strong { display: block; font-size: .93rem; font-weight: 600; color: var(--navy); margin-bottom: .2rem; }
+.checkbox-row-text span  { font-size: .82rem; color: var(--gray); }
+
+/* Primary action button (full width orange) */
+.btn-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+  width: 100%;
+  padding: 1rem;
+  background: var(--orange);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .2s, transform .15s;
+  margin-top: 1.5rem;
+}
+.btn-action:hover { background: var(--orange-d); transform: translateY(-1px); }
+
+/* ── RESPONSIVE ───────────────────────────────── */
+@media (max-width: 900px) {
+  .sidebar { display: none; }
+  .app-main { margin-left: 0; }
+  .step-bar { padding: 0 1rem; height: auto; padding-top: .8rem; padding-bottom: .8rem; flex-wrap: wrap; gap: .5rem; }
+  .step-connector { display: none; }
+  .app-content { padding: 1.5rem; }
+}
+
+
+.dataset-card {
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.2rem;
+  transition: all .2s;
+  background: white;
+  height: 100%;
+}
+.dataset-card:hover { border-color: var(--orange); }
+.dataset-card--active {
+  border-color: var(--orange);
+  background: #fffbf5;
+}
+.dataset-radio {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  border: 2px solid #d1d5db;
+  flex-shrink: 0;
+}
+.dataset-radio--active {
+  border-color: var(--orange);
+  background: radial-gradient(circle, var(--orange) 45%, white 46%);
+}
+
+.card-step-header-dataset-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.qa-arrow {
+  color:#9ca3af;
+  display:flex;
+  align-items:center;
+  transition: transform .25s ease;
+}
+
+.qa-arrow.open {
+  transform: rotate(180deg);
+}

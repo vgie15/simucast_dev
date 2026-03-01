@@ -1,0 +1,304 @@
+StudentID,Name,Age,Email,Department,GPA,GraduationYear
+3336,David Palmer,19.0,sean43@hotmail.com,Mathematics,3.16,2026.0
+8774,Andrew Roach,23.0,vbecker@harvey.com,Chemistry,3.75,2027.0
+1396,Jonathan Gonzalez,22.0,hollydavis@gmail.com,Physics,2.95,2027.0
+6716,Kenneth Morrow,24.0,ganderson@wheeler-atkins.info,Physics,3.55,2029.0
+8830,Kaitlyn Martinez,18.0,hayesdiane@gmail.com,Chemistry,2.29,2025.0
+5305,Tiffany Wolf,23.0,qanderson@taylor.com,Mathematics,3.3,2029.0
+5048,James Reyes,20.0,drodriguez@nguyen-cooper.info,Chemistry,2.44,2029.0
+5986,Samantha Sellers,20.0,michelle27@hubbard-webster.com,Mathematics,3.44,2025.0
+8721,Michael Kim,25.0,jacksonhannah@miles.com,Computer Science,3.27,2027.0
+6622,Emily Davis,18.0,george02@hotmail.com,Physics,3.09,2030.0
+3254,Adam Evans,20.0,bryantmargaret@hernandez.com,Physics,3.42,2026.0
+8021,Alejandra Galloway,21.60347951004704,danielpowers@schmidt.com,Chemistry,2.33,2027.0
+9477,Cindy Johnston,22.0,james96@webb.org,Mathematics,3.76,2025.0
+9144,Taylor Krueger II,20.0,hleon@smith.net,Computer Science,2.02,2025.0
+4854,Kimberly Vang,23.0,jonathanfoster@sanchez.com,Computer Science,3.35,2030.0
+3690,Alex Allen,24.0,shawkaren@smith.net,Physics,3.21,2029.0
+4462,Dawn Caldwell,24.0,kelly96@gmail.com,Computer Science,3.92,2027.1017894725903
+3255,Connie Cline,22.0,patelmercedes@green.com,Chemistry,3.42,2024.0
+5446,Christine Smith,21.0,nicholasmejia@hotmail.com,Computer Science,3.43,2027.0
+8125,Dana Burke,23.0,davismichael@yahoo.com,Physics,2.05,2025.0
+3052,Suzanne Lopez,18.0,thomasbennett@gmail.com,Computer Science,2.33,2025.0
+2602,Meagan Thompson,21.60347951004704,robert13@gmail.com,Physics,3.68,2028.0
+1866,Erica Welch,25.0,hernandezbrent@delgado-terry.com,Mathematics,3.84,2028.0
+4908,Debra Reilly,21.0,amy78@jackson.com,Chemistry,3.82,2027.0
+6711,Rachel Hill,22.0,elizabeth41@hill-johnson.com,Computer Science,2.99,2026.0
+1165,Lauren Hill,22.0,timothy00@lopez.com,Biology,2.49,2024.0
+7657,Andrea Castro,19.0,valvarez@hotmail.com,Physics,3.16,2024.0
+4776,Sarah Cruz,24.0,melissa92@hicks.com,Physics,3.56,2026.0
+5711,Teresa Patrick PhD,25.0,hbrooks@nelson-bennett.info,Physics,3.58,2030.0
+8511,Brittany Thompson,19.0,chavezallison@yahoo.com,Chemistry,2.82,2024.0
+4009,Sean Wells,21.0,barreracourtney@nguyen.com,Physics,2.98,2029.0
+7998,Robert Simmons,24.0,daniel00@gmail.com,Chemistry,3.21,2030.0
+5676,William Holt,22.0,warrensmith@yahoo.com,Chemistry,2.15,2030.0
+8134,Brandon Garcia,19.0,brandon58@cummings-johnson.biz,Computer Science,2.73,2030.0
+5119,Alexander Jones,25.0,emily28@hotmail.com,Physics,2.92,2024.0
+7304,William Anderson,25.0,jacob29@gmail.com,Mathematics,3.51,2024.0
+3663,Shawna Glover,19.0,alison62@barrett.com,Biology,2.75,2028.0
+6423,Susan Galvan,22.0,theresa04@gmail.com,Chemistry,3.26,2028.0
+5155,Jason King,24.0,oliviawalls@hotmail.com,Chemistry,3.74,2024.0
+1066,Alexander Simmons,19.0,jonathanfoster@sanchez.com,Biology,3.26,2028.0
+5773,James Moore,24.0,daniel72@long.com,Physics,2.37,2024.0
+8417,Frank Garza,19.0,jennifer82@cruz.com,Mathematics,2.67,2027.0
+4235,Cynthia Parker DVM,22.0,jasminelewis@washington.com,Mathematics,2.02,2028.0
+7002,Robert Smith,21.60347951004704,amanda74@gmail.com,Chemistry,2.7,2028.0
+5998,Marie Valdez,18.0,xwarner@nelson.com,Computer Science,3.5,2030.0
+9661,Patty Duke,18.0,sparksanna@gmail.com,Chemistry,3.6,2027.0
+5144,Teresa Lucas,20.0,epatel@edwards-smith.info,Biology,3.47,2029.0
+3719,Melanie Lowe,25.0,nicolepruitt@bell-gibson.org,Computer Science,3.05,2027.1017894725903
+9310,Isaiah Morales,25.0,lutzjason@neal.biz,Physics,3.06,2025.0
+9271,Connor Fry,19.0,masseytom@gmail.com,Chemistry,3.94,2030.0
+4603,Autumn Nguyen,22.0,john53@hotmail.com,Mathematics,2.13,2030.0
+5001,Jasmin Pena,23.0,ajackson@hotmail.com,Chemistry,3.64,2025.0
+5618,Mrs. Carol Williams MD,22.0,janice01@yahoo.com,Physics,3.56,2027.0
+3205,Andrew Lutz,20.0,patrick16@yahoo.com,Chemistry,3.16,2029.0
+8431,Julie Martin,25.0,angelawilliams@gmail.com,Chemistry,3.56,2030.0
+4604,Lisa Brown,19.0,annette64@gmail.com,Physics,2.81,2025.0
+7287,Holly King,23.0,williamsjack@randolph.com,Chemistry,2.94,2024.0
+3481,Ricky Sanders,19.0,buckleyandrew@gmail.com,Computer Science,3.8,2027.0
+3068,Gary Taylor,21.0,veronicarogers@yahoo.com,Mathematics,2.62,2030.0
+4514,Arthur Thornton,25.0,kirstenowen@yahoo.com,Biology,2.1,2024.0
+2499,Eric Leonard,23.0,theresarosales@gmail.com,Biology,2.39,2027.0
+5212,William Smith,23.0,daniel93@lee-morris.com,Mathematics,3.29,2028.0
+5550,Daniel Daniel,22.0,christianbrown@yahoo.com,Physics,3.51,2027.0
+8265,Joel Nicholson,24.0,michaelpratt@murray.net,Chemistry,2.79,2027.0
+6398,Benjamin Burke,18.0,colemary@cochran.net,Computer Science,2.47,2025.0
+2706,Brandi Roberts,24.0,joshua76@yahoo.com,Computer Science,3.88,2025.0
+9410,Patrick Anderson,19.0,meganlewis@butler-bright.com,Computer Science,2.75,2029.0
+5851,Jerry Butler,19.0,sherri94@hines.net,Computer Science,2.18,2030.0
+9842,Cynthia Garrett,19.0,rhall@gmail.com,Mathematics,3.18,2027.0
+6069,Carrie Hall,20.0,stewartlori@yahoo.com,Chemistry,2.33,2029.0
+7081,Paul Brown,22.0,uyoder@miller.com,Chemistry,3.46,2027.0
+9812,William Villarreal,20.0,petersoncheryl@davis-bush.com,Physics,3.92,2030.0
+1790,Randy Pittman,19.0,robin33@knapp.com,Physics,3.92,2028.0
+8268,Alexandra Roth,21.60347951004704,kristin46@hotmail.com,Mathematics,2.87,2025.0
+1383,Stephanie Mitchell,18.0,michellemoody@williams.com,Chemistry,3.68,2026.0
+4197,Michelle Kemp,23.0,susanwilliams@hotmail.com,Computer Science,2.53,2027.1017894725903
+4517,Corey Hicks,25.0,fosterglen@gmail.com,Computer Science,3.23,2027.0
+6733,Melinda Hancock,25.0,linda93@gmail.com,Biology,2.6,2026.0
+5406,Julian Smith,22.0,joseph78@gmail.com,Computer Science,3.84,2029.0
+5652,Brooke Davis,19.0,millerkevin@white.com,Chemistry,3.35,2030.0
+4846,Diane Williams,20.0,zmclean@boyd.net,Computer Science,2.83,2027.0
+9806,Stephanie Beck,18.0,rwinters@hotmail.com,Biology,2.74,2028.0
+8526,Joe Kim,23.0,salinaschristine@gmail.com,Mathematics,3.5,2026.0
+3257,Tammy Byrd,22.0,phillipsmith@gmail.com,Mathematics,3.67,2027.0
+1214,Scott Gomez,24.0,jacksonjulie@estrada.org,Physics,3.28,2027.0
+2921,Sean Davis,21.60347951004704,tina80@miller-navarro.com,Computer Science,3.97,2024.0
+1853,Luis Hunter,19.0,uschultz@palmer-lambert.biz,Biology,3.07,2027.0
+4418,Rachel Mahoney MD,25.0,teresamitchell@hernandez.net,Computer Science,2.14,2028.0
+6729,Christina Woodward,18.0,juan08@yahoo.com,Physics,3.52,2026.0
+4509,Shawna Moore,21.0,joseyoung@richardson.net,Physics,3.16,2024.0
+8646,Stacy Jones,18.0,currymelissa@coleman-meza.info,Mathematics,2.84,2028.0
+4675,Ms. Susan Suarez,25.0,amanda13@smith.org,Biology,3.86,2025.0
+9291,Donna Briggs,23.0,avalenzuela@norris-wood.org,Chemistry,2.3,2028.0
+8808,Tiffany Russell,20.0,kimberly95@gmail.com,Physics,2.7,2030.0
+5441,Shawn Phillips,25.0,mbass@hotmail.com,Mathematics,3.77,2030.0
+6001,Peter Wilson,22.0,qcantu@woods.info,Chemistry,3.39,2024.0
+5630,Joe Bernard,21.0,kimberly88@herring.info,Chemistry,3.2,2024.0
+4311,Brittany Hamilton,21.0,smithkaren@yahoo.com,Biology,3.95,2024.0
+6577,Maria Rogers,20.0,reneemartinez@hotmail.com,Physics,2.11,2027.0
+6809,Rebecca Miller,23.0,michaelconner@hotmail.com,Biology,2.76,2024.0
+2318,Bryan Velazquez,25.0,bpowell@gmail.com,Mathematics,3.0,2030.0
+4948,William Montgomery,22.0,chavezryan@smith.com,Chemistry,2.85,2024.0
+7574,Robert Berg,24.0,stephensbrenda@perez.com,Physics,3.97,2030.0
+8155,Peter White,23.0,goodwinrachel@burke.org,Computer Science,3.52,2028.0
+5776,Ashley Garcia,20.0,daviscory@yahoo.com,Physics,3.37,2030.0
+1857,Brandon Smith,25.0,ortizjoseph@moore.com,Computer Science,3.41,2025.0
+1742,Kristen Orozco,20.0,vbonilla@ho.com,Biology,2.86,2030.0
+4406,Joanna Logan,21.0,yflores@brooks.info,Physics,3.86,2030.0
+2800,Mark Harper,19.0,mikayla15@chavez.com,Computer Science,2.99,2029.0
+1666,Jaime Hanson,20.0,whitechristine@gonzalez.info,Computer Science,3.23,2027.0
+1328,Johnathan Morris,21.0,cassiemcdonald@gmail.com,Biology,2.51,2030.0
+7728,Jeffrey Sosa,24.0,nhardin@thomas.com,Computer Science,2.38,2025.0
+6489,Mitchell Sharp,24.0,blackbrandi@gmail.com,Chemistry,3.25,2027.0
+9047,Jose Peters,23.0,zrowe@morales.net,Chemistry,2.14,2025.0
+5788,Jeffrey Torres,18.0,yvonnemiller@robinson.com,Biology,3.75,2025.0
+8426,Noah Lee,25.0,olucas@cline-robinson.com,Physics,2.2,2027.0
+8366,Jeremy Graham,20.0,dcontreras@hotmail.com,Biology,2.77,2030.0
+2963,Mary Harrison,21.0,tylerbaldwin@yahoo.com,Biology,2.99,2027.0
+3669,Meghan Roy,23.0,ystevens@yahoo.com,Computer Science,2.48,2025.0
+4925,Kevin Moore,20.0,michaelarroyo@guerrero.com,Computer Science,3.63,2027.0
+6915,Pedro Roth,23.0,knightkelly@miller-wong.org,Chemistry,3.03,2030.0
+4538,Holly Donaldson,23.0,katherine18@hammond.info,Physics,3.65,2025.0
+1663,Patricia Boyer,18.0,fcabrera@haynes-clark.com,Physics,3.32,2030.0
+1708,Alexander Mccarty,22.0,sandra21@burnett-gutierrez.com,Biology,3.37,2027.0
+9707,Michael Baldwin DDS,25.0,joshuagibbs@ross.biz,Computer Science,2.41,2026.0
+4188,Anna Harper,23.0,marcpatel@gmail.com,Computer Science,3.8,2027.0
+5902,Steve Green,24.0,gabrielbrown@hotmail.com,Chemistry,2.9,2025.0
+7107,Edwin Boyd,18.0,aaron93@yahoo.com,Physics,3.44,2025.0
+8040,Emily Chambers,20.0,bridgessavannah@yahoo.com,Physics,2.51,2029.0
+4140,Hunter Martinez,21.0,sandy22@rollins.com,Physics,2.02,2028.0
+3797,Victor Moss,21.0,morgan52@taylor.com,Physics,3.37,2029.0
+7752,Kelly Lucas,18.0,schwartztina@yahoo.com,Physics,3.72,2026.0
+8473,Reginald Richardson,21.0,bakerjeremy@young-jones.info,Computer Science,2.04,2024.0
+1613,Patrick Sanchez,22.0,smithamanda@johnson.org,Chemistry,2.08,2026.0
+8298,Michelle Chen DDS,24.0,rebeccapreston@young.info,Computer Science,2.5,2027.0
+6502,Richard Sherman,22.0,alexandra82@yahoo.com,Physics,2.9,2030.0
+7506,Robert Williams,18.0,salvarado@yahoo.com,Chemistry,3.18,2024.0
+4633,Samuel Alexander,24.0,iherring@solis.com,Computer Science,3.77,2024.0
+9239,Anthony Graham,21.0,anamartin@hotmail.com,Mathematics,2.02,2026.0
+9872,Dr. Lynn Hoffman,25.0,jonathangarner@yahoo.com,Mathematics,3.26,2027.0
+6585,Miss April Howard,21.0,brusso@hotmail.com,Mathematics,2.3,2024.0
+1594,Tyler Rodriguez,23.0,cruzjohn@hotmail.com,Physics,3.86,2028.0
+7265,Kevin Bowman,25.0,brownronald@clay.com,Chemistry,3.98,2030.0
+9985,Christopher Henry,19.0,steelejohn@nguyen.com,Chemistry,3.07,2030.0
+9204,Joshua Richardson,22.0,stephenanderson@gmail.com,Chemistry,2.14,2024.0
+1959,Amy Washington,21.0,stephen13@miller.com,Biology,3.85,2030.0
+4036,Amanda Cook,18.0,hannahdillon@giles.com,Computer Science,3.19,2028.0
+3694,Scott Montes,24.0,vanessameyers@hotmail.com,Chemistry,2.03,2026.0
+7829,Sean Thomas,21.0,april31@gmail.com,Physics,3.64,2029.0
+8694,Amanda Roberts,19.0,michael36@yahoo.com,Biology,2.55,2029.0
+9382,Joanna Rose,22.0,timothyfuentes@gmail.com,Physics,2.71,2025.0
+1113,Willie Russell,18.0,susan10@yahoo.com,Computer Science,2.51,2028.0
+7637,Peter Day,19.0,smaynard@cole.com,Mathematics,3.99,2029.0
+6344,Matthew Sherman,21.0,woodmonica@gmail.com,Physics,3.47,2024.0
+5468,Stephanie Moore DDS,19.0,cynthia58@yahoo.com,Physics,3.78,2025.0
+2698,Brandon Fletcher,18.0,juliepeterson@pearson-shepherd.net,Computer Science,3.71,2030.0
+7871,Ryan Thomas,20.0,whitakerjoseph@yahoo.com,Chemistry,2.59,2027.0
+8556,Mrs. Amber Luna DVM,19.0,zgray@salazar.net,Chemistry,2.62,2029.0
+5031,Crystal Fry,20.0,xstewart@huff.org,Computer Science,3.0,2025.0
+2575,William Le,20.0,morr@gmail.com,Physics,2.78,2029.0
+2322,Antonio Carter,20.0,jameslisa@morrison.com,Biology,2.45,2026.0
+9056,Beth Abbott,24.0,jhill@bell.com,Computer Science,2.58,2025.0
+6326,Christine Howard,21.0,brianna99@hotmail.com,Chemistry,2.98,2029.0
+8790,Chelsea Arellano,23.0,gregory11@russell-morris.com,Physics,3.14,2028.0
+3873,Stacy Rodriguez,22.0,tranjulia@romero.biz,Computer Science,3.59,2026.0
+3176,Shannon Green,22.0,ogordon@guerrero-holt.com,Chemistry,2.22,2030.0
+9203,Donna Reed,19.0,dennisconner@sellers.com,Physics,3.12,2027.0
+9676,Michelle Wang,24.0,mikecollins@gmail.com,Computer Science,3.44,2028.0
+2142,Thomas Barker,25.0,mmelendez@lewis.com,Chemistry,2.54,2028.0
+4138,Kimberly Cline,23.0,davismatthew@gmail.com,Biology,2.1,2029.0
+8314,Clinton Weber,25.0,bhiggins@jenkins-stevenson.com,Biology,3.98,2027.0
+9826,Lindsay Murphy,19.0,tammyjones@clayton.info,Computer Science,3.71,2026.0
+5149,Mallory May,25.0,morrisonlucas@gmail.com,Biology,2.98,2029.0
+9098,Larry Torres,25.0,rachel70@hotmail.com,Physics,2.01,2030.0
+2991,Tina Mccormick,25.0,zthompson@lee.com,Physics,2.09,2027.0
+6780,Brian Sampson,22.0,jamesgeorge@yahoo.com,Physics,3.11,2025.0
+1363,Christine Park,19.0,goodwinerica@brown.com,Computer Science,2.0,2027.0
+6589,Vicki Lewis,22.0,bperry@hotmail.com,Computer Science,3.9,2028.0
+9377,Matthew Black,24.0,lewisbetty@hotmail.com,Mathematics,2.63,2029.0
+2982,Felicia Lee,18.0,torresjacqueline@chambers-woodard.net,Biology,2.61,2028.0
+7186,James Black,22.0,sgarza@nunez.net,Physics,2.04,2026.0
+4265,James Mitchell,21.0,gracejohnson@yahoo.com,Mathematics,3.27,2026.0
+9696,Alexander Mcconnell,24.0,corysmith@anderson-anderson.com,Chemistry,3.27,2029.0
+8291,Danielle Clark,24.0,crystal02@schmidt.com,Mathematics,3.41,2029.0
+5094,Robert Foster,24.0,teresamoreno@rubio-sanchez.com,Computer Science,2.08,2030.0
+7933,Gary Clark,23.0,alyssawagner@gmail.com,Physics,3.96,2026.0
+2962,Cynthia Martin,24.0,caitlynmoody@adams.com,Physics,3.42,2026.0
+7780,Brianna Cunningham,21.0,alexanderfernando@gmail.com,Mathematics,2.51,2030.0
+8082,Dr. Jesus Johnson,21.0,xharris@hotmail.com,Chemistry,2.14,2026.0
+7240,Jessica Jarvis,22.0,nhurst@hester.info,Biology,2.34,2029.0
+3033,Theresa Hensley,21.0,evance@moore.org,Mathematics,2.92,2030.0
+2538,James Mckee,23.0,andersonmichelle@yahoo.com,Physics,2.24,2025.0
+3406,Jonathan Blanchard,25.0,jonathanfoster@sanchez.com,Computer Science,2.06,2026.0
+5615,Melissa Estrada,18.0,bowmanmatthew@martin-duran.org,Biology,2.17,2029.0
+3994,John Gallagher,23.0,elliottsheryl@wilcox.net,Chemistry,2.57,2026.0
+3274,Catherine Velasquez,22.0,fsutton@gmail.com,Physics,2.71,2025.0
+3609,Joyce Thomas,19.0,zanderson@barrera.net,Chemistry,2.22,2030.0
+9179,Theresa Hughes,21.0,mstanley@yahoo.com,Mathematics,3.23,2025.0
+4463,Steven Golden,19.0,nvasquez@yahoo.com,Computer Science,3.9,2025.0
+6178,Miss April Smith,20.0,logansanchez@manning.com,Mathematics,3.15,2028.0
+8774,Andrew Roach,23.0,vbecker@harvey.com,Chemistry,3.75,2027.0
+9179,Theresa Hughes,21.0,mstanley@yahoo.com,Mathematics,3.23,2025.0
+3406,Jonathan Blanchard,25.0,jonathanfoster@sanchez.com,Computer Science,2.06,2026.0
+8330,Adam Evans,19.835958208488883,lutzjason@neal.biz,Physics,3.521695325631523,2026.62584080816
+4409,Lindsay Murphy,18.166614551879626,valvarez@hotmail.com,Computer Science,2.018304251922458,2026.6934893998373
+2422,Andrew Roach,19.14497322800633,elizabeth41@hill-johnson.com,Physics,3.5877543156634526,2029.573361278244
+5839,Gary Clark,18.791198859335204,kimberly88@herring.info,Physics,3.698164330092776,2028.937479232487
+6787,Shannon Green,18.058985625025752,petersoncheryl@davis-bush.com,Biology,2.867318700702496,2028.606696796086
+5569,Peter Wilson,21.215649283934265,james96@webb.org,Mathematics,2.8744057971945973,2026.5282448150367
+4380,Tyler Rodriguez,19.946741534127632,ystevens@yahoo.com,Computer Science,3.1910089594697624,2028.6798921524755
+8331,Adam Evans,22.82057316041529,ortizjoseph@moore.com,Computer Science,3.210728153426297,2025.740478952537
+1678,Shawna Moore,24.57731564401349,stephensbrenda@perez.com,Physics,2.862535927250605,2028.03616092595
+3213,Brandon Garcia,23.375356455822537,fsutton@gmail.com,Physics,2.083731870288789,2029.2391691895305
+6995,Dr. Lynn Hoffman,20.67902768738261,alison62@barrett.com,Chemistry,2.4669153098730354,2024.8072172625816
+9741,Jeffrey Torres,23.65123386866945,katherine18@hammond.info,Computer Science,3.423684578913347,2025.303224821405
+9258,Connie Cline,22.26571681226231,gregory11@russell-morris.com,Chemistry,2.4556333357469,2027.9942498431333
+2814,Cynthia Parker DVM,23.568379687851323,jacksonjulie@estrada.org,Biology,2.79805546628519,2024.1947219496367
+3741,William Le,22.60079974804193,whitechristine@gonzalez.info,Computer Science,3.457230837613211,2025.1934194724577
+8943,Johnathan Morris,23.972750585345462,hannahdillon@giles.com,Physics,3.128008137785592,2026.7549094735216
+4642,Shawn Phillips,18.543574985296075,stephen13@miller.com,Computer Science,3.4826793652014,2028.212993203836
+1478,Donna Briggs,21.087531498650936,zthompson@lee.com,Computer Science,3.779896194255469,2027.474365178576
+3018,Holly Donaldson,24.885396901445667,caitlynmoody@adams.com,Physics,3.743849606032599,2026.1616316443333
+1637,Susan Galvan,22.820264217657048,jennifer82@cruz.com,Physics,2.2346404690994914,2024.006294457248
+3494,Jonathan Blanchard,20.92270278802803,avalenzuela@norris-wood.org,Computer Science,3.7527841474056745,2024.787398255092
+1648,Kimberly Vang,21.539980699602808,goodwinerica@brown.com,Mathematics,3.776996411193172,2025.058570689853
+8485,Brandon Fletcher,21.792819248012936,crystal02@schmidt.com,Chemistry,3.332078114822104,2026.97676515962
+9207,Joel Nicholson,22.23491159254054,masseytom@gmail.com,Computer Science,2.0941989660933125,2025.0642161793703
+9837,Amy Washington,23.558312911193184,valvarez@hotmail.com,Physics,3.0801699022725595,2029.5939946547503
+2066,Joyce Thomas,21.643755665954902,michelle27@hubbard-webster.com,Physics,2.283584833434982,2025.0053460489933
+1588,Amanda Cook,21.44255466344937,buckleyandrew@gmail.com,Mathematics,3.0878750451934485,2027.5192504842155
+3703,Michael Baldwin DDS,23.85265434764552,cruzjohn@hotmail.com,Chemistry,3.946894318374544,2027.7535876449208
+4198,James Mckee,24.52799507687537,warrensmith@yahoo.com,Chemistry,3.647761340086909,2028.8160661780528
+1616,Sean Davis,20.039308541880555,barreracourtney@nguyen.com,Computer Science,2.0403676777681774,2028.4148311551885
+6874,Theresa Hughes,24.139279019171465,jhill@bell.com,Computer Science,2.417583261078976,2024.194183961923
+1515,Christopher Henry,21.080903056681063,colemary@cochran.net,Chemistry,2.340310042576688,2029.894292764304
+2287,Amy Washington,22.887630716398192,annette64@gmail.com,Biology,3.832734745239828,2028.8690921326424
+9502,Ashley Garcia,21.054879426433384,kristin46@hotmail.com,Physics,3.1534857946886152,2028.6926443351056
+8060,Brandi Roberts,21.701004075356952,danielpowers@schmidt.com,Physics,3.2158612637011808,2026.166048902683
+2275,Amanda Roberts,22.105113420865,tina80@miller-navarro.com,Biology,2.237503283120408,2029.932220057652
+8539,Christine Smith,18.781587233141288,hannahdillon@giles.com,Mathematics,2.4886321598799417,2027.1871194792168
+1388,Cynthia Garrett,21.40565584655687,hayesdiane@gmail.com,Biology,2.94098881246137,2028.6909199100369
+2216,Edwin Boyd,18.23684275894505,fosterglen@gmail.com,Physics,2.463966261841932,2024.9066573703017
+2630,Dana Burke,23.06950597683264,robin33@knapp.com,Computer Science,3.3369449075679096,2024.1043539790976
+1472,Melissa Estrada,22.307630987302943,ganderson@wheeler-atkins.info,Chemistry,3.3871043242897945,2024.1204960692023
+7066,Clinton Weber,18.06562794985473,alyssawagner@gmail.com,Physics,3.09762302351167,2029.8162763844027
+6839,Jonathan Blanchard,18.697867862441672,stephenanderson@gmail.com,Computer Science,2.2121499615696982,2026.1133968808567
+2090,Willie Russell,23.47339809962768,corysmith@anderson-anderson.com,Biology,2.054953966927312,2026.8784016356217
+3843,Andrew Roach,24.01424803165121,bowmanmatthew@martin-duran.org,Computer Science,3.219634371966845,2026.5766538571768
+8374,Suzanne Lopez,18.56480560711656,bowmanmatthew@martin-duran.org,Physics,3.8846738167100447,2028.9152228307728
+2649,Susan Galvan,20.430017887450653,amy78@jackson.com,Biology,3.915255096565693,2029.174796203013
+8909,Adam Evans,21.963992997878865,bowmanmatthew@martin-duran.org,Physics,2.7699392406078966,2028.5316361503988
+3494,Stephanie Beck,22.348357482552405,sparksanna@gmail.com,Chemistry,2.394565175496977,2024.9979834225885
+1873,Michelle Kemp,23.48357225116057,xharris@hotmail.com,Biology,3.1421633121295915,2027.9855236884391
+9259,Corey Hicks,23.901826662551564,brandon58@cummings-johnson.biz,Computer Science,3.402069228951863,2026.5857080970927
+5567,Ashley Garcia,18.69198171632619,jonathanfoster@sanchez.com,Chemistry,3.8024914979406574,2027.705052260012
+7484,Scott Gomez,18.57218923895955,susanwilliams@hotmail.com,Chemistry,3.2309625356885183,2028.6053635704875
+7783,Jasmin Pena,22.1273596956363,salinaschristine@gmail.com,Computer Science,2.175089466043564,2028.415505308588
+9757,Kimberly Vang,19.74120786876972,goodwinrachel@burke.org,Physics,2.083906822392352,2024.9702628047355
+5867,Jonathan Blanchard,22.067986268002898,patelmercedes@green.com,Mathematics,2.759295105913393,2028.425632505376
+9083,Mark Harper,22.72646892018807,joseyoung@richardson.net,Computer Science,2.854769352206719,2026.0572941919584
+2511,Mallory May,24.95348784817544,kimberly95@gmail.com,Chemistry,3.8135409669398137,2025.819202641623
+4252,Alejandra Galloway,23.03147959274032,rwinters@hotmail.com,Computer Science,2.598626924648496,2025.0855710791272
+9363,Taylor Krueger II,20.99321454595501,jennifer82@cruz.com,Physics,3.633533066443218,2025.4340846223945
+7040,Julie Martin,20.119812417953725,barreracourtney@nguyen.com,Computer Science,3.8584686702185937,2025.7092418107989
+6549,Benjamin Burke,19.265605903925064,jonathanfoster@sanchez.com,Physics,3.08156322529708,2024.3785686824376
+7124,Jeffrey Sosa,19.24477307633653,epatel@edwards-smith.info,Physics,3.881704199954621,2027.722548000508
+4957,Alex Allen,21.41147253436744,davismichael@yahoo.com,Mathematics,3.4806066682985928,2026.598419958308
+1498,Lindsay Murphy,22.759308564440914,uyoder@miller.com,Computer Science,3.458123611174547,2029.0976497122128
+8314,Theresa Hughes,18.113108391958203,brianna99@hotmail.com,Physics,3.225939683260316,2028.6630410398225
+1651,William Montgomery,24.56323650465879,masseytom@gmail.com,Physics,2.5075609146592743,2026.880283190109
+8120,Andrew Roach,21.14868056365596,hayesdiane@gmail.com,Mathematics,2.3502616327685586,2026.141401705321
+3902,Melinda Hancock,23.950829032891296,tina80@miller-navarro.com,Chemistry,2.659223172962556,2026.7174124238804
+8572,Peter Wilson,24.19387697812143,barreracourtney@nguyen.com,Computer Science,2.75000273345954,2025.4597133051848
+4387,Matthew Black,24.94444820540032,nvasquez@yahoo.com,Computer Science,2.3258123213085056,2025.9207188700389
+3396,Sarah Cruz,24.16810679198189,salinaschristine@gmail.com,Computer Science,2.930158787708205,2025.1371315775896
+6431,Emily Chambers,18.54901942295659,sandy22@rollins.com,Biology,3.38629705563406,2029.940725098941
+4786,Brandi Roberts,24.477567030232333,hleon@smith.net,Mathematics,3.527697869933504,2029.9301646034344
+4670,Stephanie Moore DDS,19.69797648504482,alexanderfernando@gmail.com,Computer Science,2.651718277129113,2029.5534339708568
+5453,Jason King,19.245171952288835,corysmith@anderson-anderson.com,Chemistry,2.29297798358587,2028.7874769039083
+2869,Stacy Jones,18.577475058430164,marcpatel@gmail.com,Mathematics,2.71205586721187,2025.0925569536705
+3517,Daniel Daniel,19.858114590560945,tina80@miller-navarro.com,Biology,2.6539376725451014,2025.167181360696
+4278,Christina Woodward,24.900938181057832,kimberly88@herring.info,Mathematics,3.8187651692395512,2026.8418126751324
+8662,Robert Berg,21.610971695191328,yvonnemiller@robinson.com,Physics,2.2156100926587734,2028.8664759472845
+9155,Mrs. Amber Luna DVM,18.13341844377188,torresjacqueline@chambers-woodard.net,Mathematics,2.110118342354773,2027.2220989344744
+3663,Jeremy Graham,20.196664072590337,colemary@cochran.net,Computer Science,2.187770332906424,2026.1409610437488
+6595,Theresa Hughes,18.33527277840405,theresarosales@gmail.com,Mathematics,2.7991313756773795,2025.0295859657024
+9491,Joanna Logan,23.484613723711515,linda93@gmail.com,Physics,2.185835360284929,2026.7869207243843
+7614,Sean Thomas,24.629298755864504,rachel70@hotmail.com,Chemistry,2.7614476587378904,2025.158197167264
+5314,Jasmin Pena,18.61441131736667,jhill@bell.com,Computer Science,2.966764143886958,2025.52130869764
+8826,Kenneth Morrow,21.78928095207924,hernandezbrent@delgado-terry.com,Biology,2.8932841059536885,2024.350984041636
+1387,Corey Hicks,19.96050875838201,zanderson@barrera.net,Chemistry,3.0216916486007435,2029.9280596527867
+6034,Kevin Bowman,21.369836741704216,juliepeterson@pearson-shepherd.net,Mathematics,2.415161059985832,2028.2293892790672
+2546,William Holt,20.894479881144065,hannahdillon@giles.com,Mathematics,2.673449395325675,2026.4188462060567
+4012,Joanna Rose,22.55119553031616,morr@gmail.com,Chemistry,3.8730152476199313,2026.8782758230905
+6598,Patty Duke,22.18246280115256,brusso@hotmail.com,Chemistry,3.864922827983839,2027.599923749083
+8935,Lisa Brown,19.808125000167145,steelejohn@nguyen.com,Physics,2.501183053883493,2027.768056189128
+2593,Jeffrey Sosa,20.198362665496127,vbecker@harvey.com,Physics,3.674170062134357,2024.1849535233468
+7401,Michelle Wang,23.83242761915448,yvonnemiller@robinson.com,Physics,2.9269473955000262,2028.9693114228264
+8565,Bryan Velazquez,22.13610519212101,mmelendez@lewis.com,Physics,2.779584730254685,2029.8459522781
+6613,Peter Day,23.5366690566637,jonathanfoster@sanchez.com,Biology,3.979559356060404,2028.5417567292743
+2949,Cindy Johnston,23.56544437032506,morr@gmail.com,Physics,3.830838947006267,2024.076819083044
+3686,Anthony Graham,20.72670021748696,qcantu@woods.info,Mathematics,2.9431560373682952,2029.3992199820743
+1127,Edwin Boyd,24.90896161110309,mstanley@yahoo.com,Mathematics,2.6437027281651035,2026.2747990903968

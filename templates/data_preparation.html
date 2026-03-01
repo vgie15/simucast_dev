@@ -1,0 +1,408 @@
+{% extends "base_app.html" %}
+{% block title %}Data Preparation{% endblock %}
+
+{% block content %}
+<h1 class="page-title">Data Preparation</h1>
+<p class="page-subtitle">Upload, preview, clean, and configure your dataset for predictive modeling</p>
+
+<div class="app-card">
+  <div class="card-step-header-dataset-card">
+    <div style="display:flex; align-items:center; gap:.8rem;">
+      <div class="card-step-num">1</div>
+      <span class="card-step-title">Upload Dataset</span>
+    </div>
+    {% if uploaded_file %} 
+    <a href="/change-dataset" style="display:flex; align-items:center; gap:.5rem; padding:.5rem 1.1rem; border:1.5px solid var(--orange); border-radius:10px; font-size:.85rem; font-weight:600; color:var(--orange); text-decoration:none;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+      Change Dataset
+    </a>
+    {% endif %}
+  </div>
+
+  {% if uploaded_file %}
+    <div style="margin-bottom:1.5rem;">
+
+      <!-- Success banner -->
+      <div id="uploadToast" style="display:flex; align-items:center; justify-content:space-between; gap:.6rem; padding:.9rem 1.2rem; background:#f0fdf4; border:1.5px solid #86efac; border-radius:10px; margin-bottom:1.2rem; transition: opacity .5s;">
+        <div style="display:flex; align-items:center; gap:.6rem;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="9 12 12 15 16 9"/></svg>
+          <span style="font-weight:700; font-size:.9rem; color:#15803d;">Dataset uploaded successfully!</span>
+        </div>
+        <span onclick="dismissToast()" style="cursor:pointer; color:#6b7280; font-size:1.1rem; line-height:1;">✕</span>
+      </div>
+
+      <script>
+        function dismissToast() {
+          const toast = document.getElementById('uploadToast');
+          toast.style.opacity = '0';
+          setTimeout(() => toast.style.display = 'none', 500);
+          sessionStorage.setItem('toastDismissed', '1');
+        }
+
+        // Hide immediately if already dismissed
+        if (sessionStorage.getItem('toastDismissed') === '1') {
+          document.getElementById('uploadToast').style.display = 'none';
+        } else {
+          // Auto-dismiss after 4 seconds
+          setTimeout(dismissToast, 4000);
+        }
+      </script>
+
+      <!-- Available Datasets -->
+      <div style="font-weight:700; font-size:1rem; color:#1a1a2e; margin-bottom:.3rem;">Available Datasets</div>
+      <div style="font-size:.85rem; color:#6b7280; margin-bottom:1rem;">Select which dataset to use for the next steps.</div>
+
+      <form method="POST" action="/select-dataset" id="datasetSelectForm">
+        <div style="display:grid; grid-template-columns:1fr {% if synthetic_count %}1fr{% endif %}; gap:1rem; margin-bottom:1rem;">
+
+          <!-- Real Dataset -->
+          <label style="cursor:pointer;">
+            <input type="radio" name="active_dataset" value="real"
+                  {% if active_dataset == 'real' or not active_dataset %}checked{% endif %}
+                  onchange="this.form.submit()" style="display:none;">
+            <div class="dataset-card {% if active_dataset == 'real' or not active_dataset %}dataset-card--active{% endif %}" id="card-real">
+              <div style="display:flex; align-items:center; gap:.6rem; margin-bottom:.8rem;">
+                <div class="dataset-radio {% if active_dataset == 'real' or not active_dataset %}dataset-radio--active{% endif %}"></div>
+                <span style="font-weight:700; font-size:1rem;">Real Dataset</span>
+              </div>
+              <div style="font-size:.82rem; color:#6b7280; margin-bottom:.8rem;">{{ uploaded_file }}</div>
+              <div style="display:flex; flex-direction:column; gap:.3rem; font-size:.85rem;">
+                <div style="display:flex; justify-content:space-between;"><span style="color:#6b7280;">Records:</span><strong>{{ "{:,}".format(record_count) if record_count else '-' }}</strong></div>
+                <div style="display:flex; justify-content:space-between;"><span style="color:#6b7280;">Type:</span><strong>Real</strong></div>
+              </div>
+            </div>
+          </label>
+
+          {% if synthetic_count %}
+          <!-- Synthetic Dataset -->
+          <label style="cursor:pointer;">
+            <input type="radio" name="active_dataset" value="synthetic"
+                  {% if active_dataset == 'synthetic' %}checked{% endif %}
+                  onchange="this.form.submit()" style="display:none;">
+            <div class="dataset-card {% if active_dataset == 'synthetic' %}dataset-card--active{% endif %}" id="card-synthetic">
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:.8rem;">
+                <div style="display:flex; align-items:center; gap:.6rem;">
+                  <div class="dataset-radio {% if active_dataset == 'synthetic' %}dataset-radio--active{% endif %}"></div>
+                  <span style="font-weight:700; font-size:1rem;">Synthetic Dataset</span>
+                </div>
+                {% if active_dataset == 'synthetic' %}
+                <span style="background:var(--orange); color:white; font-size:.7rem; font-weight:700; padding:.2rem .6rem; border-radius:20px;">Active</span>
+                {% endif %}
+              </div>
+              <div style="font-size:.82rem; color:#6b7280; margin-bottom:.8rem;">Synthetic Expansion - {{ uploaded_file }}</div>
+              <div style="display:flex; flex-direction:column; gap:.3rem; font-size:.85rem;">
+                <div style="display:flex; justify-content:space-between;"><span style="color:#6b7280;">Records:</span><strong>{{ "{:,}".format(synthetic_count) if synthetic_count else '-' }}</strong></div>
+                <div style="display:flex; justify-content:space-between;"><span style="color:#6b7280;">Type:</span><strong>Synthetic</strong></div>
+              </div>
+            </div>
+          </label>
+          {% endif %}
+
+        </div>
+
+        <!-- Active dataset indicator -->
+        <div style="background:#f3f4f6; border-radius:8px; padding:.8rem 1.1rem; font-size:.85rem; color:#1a1a2e;">
+          <strong>Active Dataset:</strong>
+          {% if active_dataset == 'synthetic' %}
+            Synthetic Expansion - {{ uploaded_file }}
+          {% else %}
+            {{ uploaded_file }}
+          {% endif %}
+        </div>
+      </form>
+    </div>
+    {% endif %}
+
+  {% if not uploaded_file %}
+    <form method="POST" action="/prepare" enctype="multipart/form-data">
+        <div style="margin-bottom:1.4rem;">
+          <label class="app-label">Select File</label>
+          <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
+            <div id="dropDefault">
+              <span class="drop-zone-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5">
+                  <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                  <line x1="16" y1="13" x2="8" y2="13"/>
+                  <line x1="16" y1="17" x2="8" y2="17"/>
+                  <polyline points="10 9 9 9 8 9"/>
+                </svg>
+              </span>
+              <div class="drop-zone-text">Click to browse or drag and drop</div>
+              <div class="drop-zone-sub">CSV, XLSX (Max 50MB)</div>
+            </div>
+
+            <div id="dropPreview" style="display:none; text-align:center;">
+              <div style="width:52px; height:52px; border-radius:50%; border:2.5px solid var(--orange); display:flex; align-items:center; justify-content:center; margin:0 auto .8rem;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </div>
+              <div id="dropFileName" style="font-weight:700; font-size:.95rem; color:#92400e;"></div>
+              <div id="dropFileSize" style="font-size:.8rem; color:var(--orange); margin-top:.25rem;"></div>
+              <div style="font-size:.8rem; color:#9ca3af; margin-top:.4rem;">Click to select a different file</div>
+            </div>
+
+            <input type="file" id="fileInput" name="file" accept=".csv,.xlsx" style="display:none">
+          </div>
+        </div>
+
+        <label class="checkbox-row" onclick="toggleSynthetic()">
+          <input type="checkbox" id="syntheticCheck" name="use_synthetic">
+          <div class="checkbox-row-text">
+            <strong>Expand with Synthetic Data Generation</strong>
+            <span>Generate additional synthetic records to enhance dataset size and improve model accuracy</span>
+          </div>
+        </label>
+
+        <div id="syntheticOptions" style="display:none; margin-top:1rem; padding:1.5rem; background:#fffdf9; border:1px solid #fed7aa; border-radius:12px;">
+          <label class="app-label">Number of Synthetic Records</label>
+          <input type="number" name="synthetic_count" class="app-input" value="500" min="1" max="10000" style="border-color: var(--orange);">
+          <p style="font-size:.78rem; color:var(--orange); margin-top:.4rem;">Enter a value between 1 and 10,000 records</p>
+          <div style="margin-top:.8rem; padding:.9rem 1rem; background:var(--orange-lt); border-radius:8px; font-size:.82rem; color:#92400e; line-height:1.5;">
+            Synthetic data will be generated using statistical patterns from your uploaded dataset, maintaining data integrity while protecting privacy.
+          </div>
+        </div>
+
+        <button type="submit" class="btn-action">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+          Upload Dataset
+        </button>
+      </form>
+  {% endif %}
+</div>
+
+{% if preview_data %}
+<div class="app-card" style="margin-top:1.5rem;">
+  <div class="card-step-header">
+    <div class="card-step-num">2</div>
+    <span class="card-step-title">Data Preview</span>
+  </div>
+
+  <div style="overflow-x:auto;">
+    <table class="data-table">
+      <thead>
+        <tr>
+          {% for col in preview_columns %}
+          <th>{{ col }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in preview_data %}
+        <tr style="border-bottom:1px solid #f0f0f0;">
+          {% for col in preview_columns %}
+          <td style="padding:.85rem 1.2rem; color:#1a1a2e; white-space:nowrap;">{{ row[col] }}</td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endif %}
+
+{% if preview_data %}
+<div class="app-card" style="margin-top:1.5rem;">
+  <div class="card-step-header">
+    <div class="card-step-num">3</div>
+    <span class="card-step-title">Data Quality & Cleaning</span>
+  </div>
+
+  <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:12px; padding:1.5rem;">
+    <div style="font-weight:700; font-size:.95rem; color:#1a1a2e; margin-bottom:.3rem;">Quality Assessment</div>
+    <div style="font-size:.85rem; color:#6b7280; margin-bottom:1.2rem;">Good data quality. Minor cleaning may improve results.</div>
+
+    <!-- Missing Values header -->
+    <div style="border:1px solid #e5e7eb; border-radius:10px; margin-bottom:1.2rem; overflow:hidden;">
+        <div onclick="toggleQuality('missing')" style="background:white; padding:1rem 1.2rem; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+          <div>
+            <div style="font-size:.88rem; font-weight:600; color:#1a1a2e; margin-bottom:.3rem;">Missing Values</div>
+            <div style="font-size:1.1rem; font-weight:700; color:var(--orange);">
+              {{ quality_report.missing.pct if quality_report else 0 }}%
+            </div>
+          </div>
+          <span id="arrow-missing" class="qa-arrow">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </span>
+        </div>
+      
+
+      <!-- Missing Values panel -->
+      <div id="panel-missing" style="display:none; padding:1.2rem; background:#fafafa; border-top:1px solid #e5e7eb;">
+        <div style="font-weight:700; font-size:.95rem; margin-bottom:.8rem;">Missing Value Details</div>
+
+        {% if quality_report and quality_report.missing.columns %}
+          <div style="font-size:.78rem; color:var(--orange); margin-bottom:.5rem;">Affected Columns:</div>
+          {% for col in quality_report.missing.columns %}
+          <div style="background:white; border:1px solid #e5e7eb; border-radius:8px; padding:.7rem 1rem; display:flex; justify-content:space-between; margin-bottom:.4rem; font-size:.85rem;">
+            <span>{{ col.column }}</span>
+            <span style="color:#6b7280;">{{ col.count }} rows ({{ col.pct }}%)</span>
+          </div>
+          {% endfor %}
+        {% else %}
+          <div style="background:#f0fdf4; border:1px solid #86efac; border-radius:8px; padding:.8rem 1rem; font-size:.85rem; color:#16a34a;">
+            ✅ No missing values detected
+          </div>
+        {% endif %}
+
+        <div style="font-size:.78rem; color:var(--orange); margin:.8rem 0 .5rem;">
+          Suggested Actions:
+        </div>
+
+        <form method="POST" action="/clean/missing">
+          <!-- Standard Imputation Group -->
+          <div style="font-size:.75rem; font-weight:600; color:#6b7280; margin:.6rem 0 .4rem;">
+            Standard Imputation
+          </div>
+
+          <label style="display:flex; align-items:center; gap:.6rem; font-size:.85rem; margin-bottom:.4rem;">
+            <input type="checkbox" class="imputation-check" name="mean_imputation"> Mean imputation (numeric fields)
+          </label>
+
+          <label style="display:flex; align-items:center; gap:.6rem; font-size:.85rem; margin-bottom:.4rem;">
+            <input type="checkbox" class="imputation-check" name="median_imputation"> Median imputation (numeric fields)
+          </label>
+
+          <label style="display:flex; align-items:center; gap:.6rem; font-size:.85rem; margin-bottom:.4rem;">
+            <input type="checkbox" class="imputation-check" name="mode_imputation"> Mode imputation (categorical fields)
+          </label>
+
+          <label style="display:flex; align-items:center; gap:.6rem; font-size:.85rem; margin-bottom:.8rem;">
+            <input type="checkbox" id="removeRowsCheck" name="remove_rows"> Remove rows with missing values
+          </label>
+
+          <!-- Time-Series Group 
+          <div style="font-size:.75rem; font-weight:600; color:#6b7280; margin:.6rem 0 .4rem;">
+            Time-Series Methods
+          </div>
+
+          <label style="display:flex; align-items:center; gap:.6rem; font-size:.85rem; margin-bottom:.4rem;">
+            <input type="checkbox" class="imputation-check" name="forward_fill"> Forward fill
+          </label>
+
+          <label style="display:flex; align-items:center; gap:.6rem; font-size:.85rem; margin-bottom:.4rem;">
+            <input type="checkbox" class="imputation-check" name="backward_fill"> Backward fill
+          </label>
+
+          <label style="display:flex; align-items:center; gap:.6rem; font-size:.85rem; margin-bottom:.8rem;">
+            <input type="checkbox" class="imputation-check" name="interpolation"> Linear interpolation
+          </label>
+          -->
+
+          <button type="submit" class="btn-action" style="background:#f59e0b; margin-top:0;">
+              Apply Selected Fix
+          </button>
+        </form>
+      </div>
+    </div>
+
+
+      <!-- Outliers -->
+    <div style="border:1px solid #e5e7eb; border-radius:10px; margin-bottom:.8rem; overflow:hidden;">
+      <div onclick="toggleQuality('outliers')" style="background:white; padding:1rem 1.2rem; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+        <div>
+          <div style="font-size:.88rem; font-weight:600; color:#1a1a2e; margin-bottom:.3rem;">Outliers</div>
+          <div style="font-size:1.1rem; font-weight:700; color:var(--orange);">{{ quality_report.outliers.pct if quality_report else '—' }}%</div>
+        </div>
+        <span id="arrow-outliers" class="qa-arrow">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </span>
+      </div>
+      <div id="panel-outliers" style="display:none; padding:1.2rem; background:#fafafa; border-top:1px solid #e5e7eb;">
+        <div style="font-weight:700; font-size:.95rem; margin-bottom:.8rem;">Outlier Detection Details</div>
+
+        <div style="font-size:.78rem; color:var(--orange); margin-bottom:.5rem;">Columns with Detected Outliers:</div>
+        {% if quality_report and quality_report.outliers.columns %}
+          {% for col in quality_report.outliers.columns %}
+          <div style="background:white; border:1px solid #e5e7eb; border-radius:8px; padding:.7rem 1rem; display:flex; justify-content:space-between; margin-bottom:.4rem; font-size:.85rem;">
+            <span>{{ col.column }}</span>
+            <span style="color:#6b7280;">{{ col.count }} extreme values</span>
+          </div>
+          {% endfor %}
+        {% else %}
+          <div style="background:#f0fdf4; border:1px solid #86efac; border-radius:8px; padding:.8rem 1rem; font-size:.85rem; color:#16a34a; margin-bottom:.8rem;">
+            ✅ No outliers detected
+          </div>
+        {% endif %}
+
+        <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:.7rem 1rem; font-size:.82rem; margin:.8rem 0; color:#1e40af;">Detection Method: IQR Method</div>
+
+        <div style="font-size:.78rem; color:var(--orange); margin-bottom:.5rem;">Suggested Actions:</div>
+        <form method="POST" action="/clean/outliers">
+          <label style="display:flex; align-items:center; gap:.6rem; font-size:.85rem; margin-bottom:.4rem;">
+            <input type="checkbox" name="cap_values"> Cap extreme values
+          </label>
+          <label style="display:flex; align-items:center; gap:.6rem; font-size:.85rem; margin-bottom:.8rem;">
+            <input type="checkbox" name="remove_outliers"> Remove outliers
+          </label>
+          <button type="submit" class="btn-action" style="background:#f59e0b; margin-top:0; font-size:.88rem; padding:.75rem;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            Apply Selected Fix
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Duplicates -->
+    <div style="border:1px solid #e5e7eb; border-radius:10px; margin-bottom:1.2rem; overflow:hidden;">
+      <div onclick="toggleQuality('duplicates')" style="background:white; padding:1rem 1.2rem; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+        <div>
+          <div style="font-size:.88rem; font-weight:600; color:#1a1a2e; margin-bottom:.3rem;">Duplicates</div>
+          <div style="font-size:1.1rem; font-weight:700; color:var(--orange);">{{ quality_report.duplicates.pct if quality_report else '—' }}%</div>
+        </div>
+        <span id="arrow-duplicates" class="qa-arrow">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        </span>
+      </div>
+      <div id="panel-duplicates" style="display:none; padding:1.2rem; background:#fafafa; border-top:1px solid #e5e7eb;">
+        <div style="font-weight:700; font-size:.95rem; margin-bottom:.8rem;">Duplicate Rows Details</div>
+        <div style="background:#fafafa; border:1px solid #e5e7eb; border-radius:8px; padding:.9rem 1rem; margin-bottom:.8rem; font-size:.88rem;">
+          <span style="font-size:1.2rem; font-weight:700; color:var(--orange);">{{ quality_report.duplicates.count if quality_report else '—' }}</span> duplicate rows detected
+        </div>
+
+
+        <div style="font-size:.78rem; color:var(--orange); margin-bottom:.5rem;">Suggested Actions:</div>
+        <form method="POST" action="/clean/duplicates">
+          <label style="display:flex; align-items:center; gap:.6rem; font-size:.85rem; margin-bottom:.8rem;">
+            <input type="checkbox" name="remove_exact" checked> Remove exact duplicates
+          </label>
+          <button type="submit" class="btn-action" style="background:#f59e0b; margin-top:0; font-size:.88rem; padding:.75rem;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            Apply Selected Fix
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% if preview_data %}
+<div style="margin-top:1.5rem; padding:1.2rem 1.5rem; background:#fffbeb; border:1px solid #fde68a; border-radius:12px; display:flex; align-items:center; justify-content:space-between;">
+  <div>
+    <div style="font-weight:700; font-size:.95rem; color:#1a1a2e; margin-bottom:.25rem;">Ready for the next step?</div>
+    <div style="font-size:.85rem; color:#6b7280;">Your datasets are ready. Let's build predictive models.</div>
+  </div>
+  <a href="/build-model" style="display:flex; align-items:center; gap:.5rem; background:var(--orange); color:white; padding:.7rem 1.3rem; border-radius:10px; font-size:.88rem; font-weight:600; text-decoration:none; white-space:nowrap;">
+    Go to Modeling
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+  </a>
+</div>
+{% endif %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/data_prep.js') }}"></script>
+{% endblock %}
+
+{% endblock %}

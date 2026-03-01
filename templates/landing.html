@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SimuCast - Predictive Analytics Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+
+<!-- ── NAV ─────────────────────────────────── -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-brand">
+      <span class="brand-icon">SC</span>
+      <div class="brand-text">
+        SimuCast
+        <small>Predictive Analytics Platform</small>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#workflow">Workflow</a>
+      <a href="#designed-for">Designed For</a>
+    </div>
+    <a href="{{ url_for('data_preparation') }}" class="btn btn-primary">Launch Platform →</a>
+  </div>
+</nav>
+
+<!-- ── HERO ────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">⚡ Predictive Modeling &amp; What-if Analysis Platform</div>
+    <h1 class="hero-title">
+      <span class="text-accent">Predictive Intelligence</span><br>
+      for Data-Driven Decisions
+    </h1>
+    <p class="hero-sub">
+      Transform your data into strategic insights with machine learning,
+      scenario analysis, and actionable recommendations, all without
+      writing a single line of code.
+    </p>
+    <div class="hero-actions">
+      <a href="{{ url_for('data_preparation') }}" class="btn btn-primary btn-lg">Get Started Free →</a>
+      <a href="#demo"    class="btn btn-outline btn-lg">Watch Demo</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-val">5+</span><span class="stat-label">ML Models</span></div>
+      <div class="stat"><span class="stat-val">What-if</span><span class="stat-label">Scenarios</span></div>
+      <div class="stat"><span class="stat-val">Dataset</span><span class="stat-label">Expansion Generation</span></div>
+      <div class="stat"><span class="stat-val">Report</span><span class="stat-label">Generations</span></div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <!-- Card 1 — Model Performance -->
+    <div class="card-float card-float--1">
+      <div class="card-float-header">
+        <span class="icon-dot"></span> Model Performance
+      </div>
+      <div class="perf-bar">
+        <span>Accuracy</span>
+        <div class="bar"><div class="bar-fill" style="width:85%"></div></div>
+        <span class="bar-val">85%</span>
+      </div>
+      <div class="perf-bar">
+        <span>Precision</span>
+        <div class="bar"><div class="bar-fill bar-fill--purple" style="width:78%"></div></div>
+        <span class="bar-val">78%</span>
+      </div>
+    </div>
+
+    <!-- Card 2 — Improvement badge -->
+    <div class="card-float card-float--2">
+      <div class="badge-improvement">+12%<br><small>Improvement</small></div>
+    </div>
+
+    <!-- Card 3 — AI Insight -->
+    <div class="card-float card-float--3">
+      <div class="card-float-header"><span class="icon-ai">🤖</span> AI Insight</div>
+      <p class="insight-text">Records with high engagement metrics show 23% better outcomes.</p>
+      <a href="#features" class="btn btn-xs btn-primary">View Details</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRODUCT WALKTHROUGH ─────────────────── -->
+<section class="section section--demo" id="demo">
+  <div class="section-badge">▶ Product Walkthrough</div>
+  <h2 class="section-title">See SimuCast in Action</h2>
+  <p class="section-sub">Watch this quick demo to learn how SimuCast transforms student data into strategic insights</p>
+
+  <div class="demo-player">
+    <div class="demo-player-inner">
+      <a href="#" class="play-btn">▶</a>
+      <p class="demo-label">SimuCast Platform Demo</p>
+    </div>
+    <div class="demo-bar">
+      <span class="demo-time">0:00</span>
+      <div class="demo-progress"></div>
+      <span class="demo-time">5:25</span>
+    </div>
+  </div>
+
+  <div class="demo-features">
+    <div class="df-item">
+      <span class="df-icon">⚙️</span>
+      <strong>Quick Setup</strong>
+      <p>Upload data and start analysing in under 2 minutes</p>
+    </div>
+    <div class="df-item">
+      <span class="df-icon">✋</span>
+      <strong>No Coding Required</strong>
+      <p>Point-and-click interface for all ML operations</p>
+    </div>
+    <div class="df-item">
+      <span class="df-icon">💡</span>
+      <strong>Instant Insights</strong>
+      <p>AI-powered recommendations in real-time</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── WORKFLOW ─────────────────────────────── -->
+<section class="section section--workflow" id="workflow">
+  <h2 class="section-title">Simple 5-Step Workflow</h2>
+  <p class="section-sub">From data upload to actionable insights in minutes</p>
+  <div class="workflow">
+    <div class="workflow-step">
+      <div class="step-num">1</div>
+      <div class="step-icon">📤</div>
+      <strong>Upload Data</strong>
+      <small>CSV or Excel files</small>
+    </div>
+    <div class="workflow-arrow">→</div>
+    <div class="workflow-step">
+      <div class="step-num">2</div>
+      <div class="step-icon">🧠</div>
+      <strong>Build Models</strong>
+      <small>AI training &amp; tuning</small>
+    </div>
+    <div class="workflow-arrow">→</div>
+    <div class="workflow-step">
+      <div class="step-num">3</div>
+      <div class="step-icon">🔬</div>
+      <strong>Test Scenarios</strong>
+      <small>What-if analysis</small>
+    </div>
+    <div class="workflow-arrow">→</div>
+    <div class="workflow-step">
+      <div class="step-num">4</div>
+      <div class="step-icon">📊</div>
+      <strong>View Insights</strong>
+      <small>AI recommendations</small>
+    </div>
+    <div class="workflow-arrow">→</div>
+    <div class="workflow-step">
+      <div class="step-num">5</div>
+      <div class="step-icon">📄</div>
+      <strong>Export Report</strong>
+      <small>PDF &amp; Excel</small>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURES ─────────────────────────────── -->
+<section class="section" id="features">
+  <h2 class="section-title">Everything You Need</h2>
+  <p class="section-sub">Comprehensive analytics suite for educational institutions</p>
+
+  <div class="features-grid">
+    <div class="feature-card feature-card--wide feature-card--orange">
+      <div class="fc-icon">🧮</div>
+      <h3>Advanced Predictive Modeling</h3>
+      <p>Train and compare multiple machine learning models including Random Forest, Gradient Boosting, Neural Networks, and more. Fine-tune hyperparameters and achieve up to 94% prediction accuracy.</p>
+      <div class="fc-tags">
+        <span>Random Forest</span>
+        <span>Gradient Boosting</span>
+        <span>Neural Networks</span>
+        <span>SVM</span>
+      </div>
+    </div>
+
+    <div class="feature-card feature-card--blue">
+      <div class="fc-icon">🧬</div>
+      <h3>Synthetic Data Engine</h3>
+      <p>Generate statistically valid synthetic records to expand small datasets while maintaining data distributions and correlations.</p>
+      <ul class="fc-checks">
+        <li>✅ Preserve correlations</li>
+        <li>✅ Maintain distributions</li>
+        <li>✅ Quality validation</li>
+      </ul>
+    </div>
+
+    <div class="feature-card feature-card--wide feature-card--light">
+      <div class="fc-icon">🔀</div>
+      <h3>Interactive What-If Scenarios</h3>
+      <p>Test unlimited intervention scenarios in real-time.</p>
+      <div class="whatif-demo">
+        <div class="wi-col">
+          <span class="wi-label">Base Outcome</span>
+          <span class="wi-val">72.5%</span>
+        </div>
+        <div class="wi-col wi-col--highlight">
+          <span class="wi-label">With Changes</span>
+          <span class="wi-val">84.2%</span>
+        </div>
+        <div class="wi-col wi-col--green">
+          <span class="wi-label">Improvement</span>
+          <span class="wi-val">+11.7%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="fc-icon">💡</div>
+      <h3>AI Insights</h3>
+      <p>Automated recommendations and risk alerts powered by your live models.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="fc-icon">📑</div>
+      <h3>Export Reports</h3>
+      <p>Professional PDF and Excel reports ready to share with stakeholders.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="fc-icon">📈</div>
+      <h3>Visual Analytics</h3>
+      <p>Interactive charts and dashboards to explore every angle of your data.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── DESIGNED FOR ─────────────────────────── -->
+<section class="section section--designed" id="designed-for">
+  <h2 class="section-title">Designed For</h2>
+  <p class="section-sub">Supporting diverse educational stakeholders</p>
+  <div class="personas-grid">
+    <div class="persona-card">
+      <div class="persona-icon">🎓</div>
+      <h3>Academic Administrators</h3>
+      <p>Make data-driven decisions on resource allocation, intervention programs, and student support strategies.</p>
+      <ul>
+        <li>✅ Enrollment forecasting</li>
+        <li>✅ Retention planning</li>
+      </ul>
+    </div>
+    <div class="persona-card">
+      <div class="persona-icon">🔬</div>
+      <h3>Educational Researchers</h3>
+      <p>Analyse patterns, test hypotheses, and publish findings with comprehensive analytical tools.</p>
+      <ul>
+        <li>✅ Pattern discovery</li>
+        <li>✅ Hypothesis testing</li>
+      </ul>
+    </div>
+    <div class="persona-card">
+      <div class="persona-icon">📊</div>
+      <h3>Data Analysts</h3>
+      <p>Streamline workflows with automated modelling, scenario testing, and report generation capabilities.</p>
+      <ul>
+        <li>✅ Automated workflows</li>
+        <li>✅ Quick reporting</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ──────────────────────────────────── -->
+<section class="section section--cta" id="contact">
+  <h2>Ready to Transform Your Analytics?</h2>
+  <p>Join institutions leveraging SimuCast for predictive insights and strategic decision-making.</p>
+  <a href="#" class="btn btn-white btn-lg">Try SimuCast Now →</a>
+</section>
+
+<!-- ── FOOTER ────────────────────────────────── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="brand-icon brand-icon--sm">SC</span>
+      <span>SimuCast Platform</span>
+    </div>
+    <p class="footer-copy">© 2024 SimuCast Platform</p>
+  </div>
+</footer>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

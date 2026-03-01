@@ -1,0 +1,195 @@
+{% extends "base_app.html" %}
+{% block title %}Build Model{% endblock %}
+
+{% block content %}
+<h1 class="page-title">Build Predictive Model</h1>
+<p class="page-subtitle">Select your target variable and compare model performance to choose the best approach</p>
+
+<div class="app-card">
+
+  <!-- Header — changes based on locked state -->
+  {% if target_confirmed %}
+  <div class="card-step-header" style="background:#f0fdf4; border-radius:10px; padding:.8rem 1.2rem; margin-bottom:1.2rem;">
+    <div style="display:flex; align-items:center; gap:.8rem;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="9 12 12 15 16 9"/></svg>
+      <span style="font-weight:700; font-size:.95rem; color:#15803d;">Target Selection</span>
+    </div>
+    <span style="display:flex; align-items:center; gap:.4rem; background:#16a34a; color:white; font-size:.78rem; font-weight:700; padding:.3rem .8rem; border-radius:20px;">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Locked
+    </span>
+  </div>
+  {% else %}
+  <div class="card-step-header">
+    <div style="display:flex; align-items:center; gap:.8rem;">
+      <div class="card-step-num">1</div>
+      <span class="card-step-title">Dataset & Target Selection</span>
+    </div>
+  </div>
+  {% endif %}
+
+  <p style="font-size:.88rem; color:#6b7280; margin-bottom:1.5rem;">Choose your dataset and define what you want to predict</p>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
+
+    <!-- Dataset -->
+    <div>
+      <div style="display:flex; align-items:center; gap:.5rem; margin-bottom:.8rem;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+        <span style="font-weight:700; font-size:.95rem;">Dataset</span>
+      </div>
+      <div style="border:1px solid #e5e7eb; border-radius:10px; padding:1rem 1.2rem; background:white; font-size:.9rem; color:#1a1a2e;">
+        {% if active_dataset == 'synthetic' %}
+          Synthetic Expansion - {{ uploaded_file }} ({{ "{:,}".format(synthetic_count) if synthetic_count else '—' }} records)
+        {% else %}
+          {{ uploaded_file }} ({{ "{:,}".format(record_count) if record_count else '—' }} records)
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Target Variable -->
+    <div>
+      <div style="display:flex; align-items:center; gap:.5rem; margin-bottom:.8rem;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+        <span style="font-weight:700; font-size:.95rem;">Target Variable (What to predict)</span>
+      </div>
+
+      <form method="POST" action="/build-model/set-target">
+        <div style="position:relative; margin-bottom:.8rem;">
+          <select name="target_column" onchange="this.form.submit()"
+            {% if target_confirmed %}disabled{% endif %}
+            style="width:100%; padding:.85rem 1.2rem; border:1px solid #e5e7eb; border-radius:10px; font-size:.9rem; color:#1a1a2e; appearance:none; background:{% if target_confirmed %}#f9fafb{% else %}white{% endif %}; cursor:{% if target_confirmed %}not-allowed{% else %}pointer{% endif %};">
+            <option value="">Select target variable</option>
+            {% for col in valid_targets %}
+            <option value="{{ col }}" {% if col == target_column %}selected{% endif %}>{{ col }}</option>
+            {% endfor %}
+          </select>
+          <svg style="position:absolute; right:1rem; top:50%; transform:translateY(-50%); pointer-events:none;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+      </form>
+
+      {% if problem_type %}
+        <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:10px; padding:1rem 1.2rem; margin-bottom:.8rem;">
+            <div style="font-size:.78rem; font-weight:600; color:#6b7280; margin-bottom:.3rem;">Prediction Task:</div>
+            <div style="font-size:1.1rem; font-weight:700; color:#1e40af;">{{ problem_type | capitalize }}</div>
+        </div>
+      {% endif %}
+
+      <p style="font-size:.78rem; color:#6b7280; line-height:1.5;">
+        The target variable determines what your model will predict. Once locked, all models will be evaluated against this target.
+      </p>
+    </div>
+
+ </div> 
+
+  <!-- Bottom banner -->
+  {% if target_confirmed %}
+  <div style="margin-top:1.5rem; padding:1rem 1.5rem; background:#f9fafb; border:1px solid #e5e7eb; border-radius:12px; display:flex; align-items:center; justify-content:space-between;">
+    <span style="font-size:.88rem; color:#6b7280;">Target variable is locked. To change it, reset the workflow.</span>
+    <form method="POST" action="/build-model/reset">
+      <button type="submit" style="padding:.6rem 1.2rem; border:1.5px solid #e5e7eb; border-radius:8px; font-size:.85rem; font-weight:600; color:#1a1a2e; background:white; cursor:pointer;">
+        Reset Workflow
+      </button>
+    </form>
+  </div>
+  {% elif target_column %}
+  <div style="margin-top:1.5rem; padding:1rem 1.5rem; background:#fffbeb; border:1px solid #fde68a; border-radius:12px; display:flex; align-items:center; justify-content:space-between;">
+    <span style="font-size:.9rem; color:#1a1a2e;">Ready to proceed? This will lock your target variable and evaluate all models.</span>
+    <form method="POST" action="/build-model/confirm">
+      <button type="submit" style="display:flex; align-items:center; gap:.5rem; background:var(--orange); color:white; padding:.7rem 1.3rem; border-radius:10px; font-size:.88rem; font-weight:600; border:none; cursor:pointer;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Confirm & Evaluate Models
+      </button>
+    </form>
+  </div>
+  {% endif %}
+
+</div>
+
+<!-- Card 2 — model results -->
+{% if target_confirmed and model_results %}
+<div class="app-card" style="margin-top:1.5rem;">
+  <div class="card-step-header">
+    <div style="display:flex; align-items:center; gap:.8rem;">
+      <div class="card-step-num">2</div>
+      <span class="card-step-title">Model Performance</span>
+    </div>
+  </div>
+  <p style="font-size:.85rem; color:#6b7280; margin-bottom:1.5rem;">Evaluated using 80% training / 20% testing split</p>
+
+  {% for result in model_results %}
+
+    {% if not result.success %}
+    <div style="background:#fef2f2; border:1px solid #fca5a5; border-radius:10px; padding:1rem 1.2rem; font-size:.88rem; color:#dc2626;">
+      ❌ {{ result.error }}
+    </div>
+
+    {% else %}
+    <!-- Warnings -->
+    {% if result.warnings %}
+    <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:10px; padding:1rem 1.2rem; margin-bottom:1rem; font-size:.82rem; color:#92400e;">
+      {% for w in result.warnings %}
+      <div>⚠ {{ w }}</div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Metrics table -->
+    <div style="overflow-x:auto; border:1px solid #e5e7eb; border-radius:12px;">
+      <table style="width:100%; border-collapse:collapse; font-size:.88rem;">
+        <thead>
+          <tr style="background:#f9fafb; border-bottom:1px solid #e5e7eb;">
+            <th style="text-align:left; padding:.85rem 1.2rem; font-size:.78rem; font-weight:600; color:#6b7280;">Model</th>
+            <th style="text-align:right; padding:.85rem 1.2rem; font-size:.78rem; font-weight:600; color:#6b7280;">R² Score</th>
+            <th style="text-align:right; padding:.85rem 1.2rem; font-size:.78rem; font-weight:600; color:#6b7280;">RMSE</th>
+            <th style="text-align:right; padding:.85rem 1.2rem; font-size:.78rem; font-weight:600; color:#6b7280;">MAE</th>
+            <th style="text-align:right; padding:.85rem 1.2rem; font-size:.78rem; font-weight:600; color:#6b7280;">Train R²</th>
+            <th style="text-align:right; padding:.85rem 1.2rem; font-size:.78rem; font-weight:600; color:#6b7280;">Predictors</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background:#fffbf5;">
+            <td style="padding:.85rem 1.2rem; color:#1a1a2e;">
+              <div style="display:flex; align-items:center; gap:.6rem;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="9 12 12 15 16 9"/></svg>
+                <strong>{{ result.model_name }}</strong>
+                <span style="background:var(--orange); color:white; font-size:.7rem; font-weight:700; padding:.2rem .6rem; border-radius:20px;">Active</span>
+              </div>
+            </td>
+            <td style="text-align:right; padding:.85rem 1.2rem; color:#1a1a2e; font-weight:600;">{{ result.metrics.holdout_r2 }}</td>
+            <td style="text-align:right; padding:.85rem 1.2rem; color:#1a1a2e;">{{ result.metrics.holdout_rmse }}</td>
+            <td style="text-align:right; padding:.85rem 1.2rem; color:#1a1a2e;">{{ result.metrics.holdout_mae }}</td>
+            <td style="text-align:right; padding:.85rem 1.2rem; color:#6b7280;">{{ result.metrics.train_r2 }}</td>
+            <td style="text-align:right; padding:.85rem 1.2rem; color:#6b7280;">{{ result.metrics.n_predictors }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Sample info -->
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:.8rem; margin-top:1rem;">
+      <div style="background:#f9fafb; border:1px solid #e5e7eb; border-radius:10px; padding:.9rem 1.1rem;">
+        <div style="font-size:.75rem; color:#6b7280; margin-bottom:.3rem;">Training Rows</div>
+        <div style="font-size:1rem; font-weight:700; color:#1a1a2e;">{{ "{:,}".format(result.metrics.n_train) }}</div>
+      </div>
+      <div style="background:#f9fafb; border:1px solid #e5e7eb; border-radius:10px; padding:.9rem 1.1rem;">
+        <div style="font-size:.75rem; color:#6b7280; margin-bottom:.3rem;">Testing Rows</div>
+        <div style="font-size:1rem; font-weight:700; color:#1a1a2e;">{{ "{:,}".format(result.metrics.n_test) }}</div>
+      </div>
+      <div style="background:#f9fafb; border:1px solid #e5e7eb; border-radius:10px; padding:.9rem 1.1rem;">
+        <div style="font-size:.75rem; color:#6b7280; margin-bottom:.3rem;">Target</div>
+        <div style="font-size:1rem; font-weight:700; color:#1a1a2e;">{{ result.target }}</div>
+      </div>
+    </div>
+    {% endif %}
+
+  {% endfor %}
+</div>
+{% endif %}
+
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/build_model.js') }}"></script>
+{% endblock %}
+
+{% endblock %}
