@@ -61,9 +61,18 @@
             style="width:100%; padding:.85rem 1.2rem; border:1px solid #e5e7eb; border-radius:10px; font-size:.9rem; color:#1a1a2e; appearance:none; background:{% if target_confirmed %}#f9fafb{% else %}white{% endif %}; cursor:{% if target_confirmed %}not-allowed{% else %}pointer{% endif %};">
             <option value="">Select target variable</option>
             {% for col in valid_targets %}
-            <option value="{{ col }}" {% if col == target_column %}selected{% endif %}>{{ col }}</option>
+            <option value="{{ col }}" {% if col == target_column %}selected{% endif %}>
+              {{ col }}{% if col in column_warnings %} ⚠{% endif %}
+            </option>
             {% endfor %}
           </select>
+
+          <!-- Show warning for selected target -->
+          {% if target_column and target_column in column_warnings %}
+          <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:8px; padding:.7rem 1rem; margin-top:.5rem; font-size:.82rem; color:#92400e;">
+            {{ column_warnings[target_column] }}
+          </div>
+          {% endif %}
           <svg style="position:absolute; right:1rem; top:50%; transform:translateY(-50%); pointer-events:none;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
       </form>
@@ -133,11 +142,16 @@
       <tbody>
         {% for result in model_results %}
         {% if result.success %}
-        <tr style="border-bottom:1px solid #f0f0f0; {% if result.recommended %}background:#fffbf5;{% endif %}">
+        <tr onclick="selectModel('{{ loop.index0 }}')"
+            id="row-{{ loop.index0 }}"
+            style="border-bottom:1px solid #f0f0f0; cursor:pointer; {% if result.recommended %}background:#fffbf5;{% endif %}">
           <td style="padding:.85rem 1.2rem; color:#1a1a2e;">
             <div style="display:flex; align-items:center; gap:.6rem;">
+              <!-- Radio indicator -->
+              <div id="radio-{{ loop.index0 }}" style="width:18px; height:18px; border-radius:50%; border:2px solid #d1d5db; flex-shrink:0;
+                {% if result.recommended %}border-color:var(--orange); background:radial-gradient(circle, var(--orange) 45%, white 46%);{% endif %}">
+              </div>
               {% if result.recommended %}
-              <div style="width:3px; height:32px; background:var(--orange); border-radius:2px; margin-left:-1.2rem; margin-right:.3rem;"></div>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="9 12 12 15 16 9"/></svg>
               <strong>{{ result.model_name }}</strong>
               <span style="background:var(--orange); color:white; font-size:.7rem; font-weight:700; padding:.2rem .6rem; border-radius:20px;">Recommended</span>
@@ -161,16 +175,19 @@
         {% endfor %}
       </tbody>
     </table>
-  </div>
 
-  <!-- Warnings — collected from all models, shown once -->
-  {% for result in model_results %}
-    {% if result.warnings %}
-    {% for w in result.warnings %}
-    <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:8px; padding:.7rem 1rem; margin-bottom:.4rem; font-size:.82rem; color:#92400e;">⚠ {{ w }}</div>
-    {% endfor %}
-    {% endif %}
-  {% endfor %}
+    <div id="modelSelectBanner" style="margin-top:1rem; padding:1rem 1.5rem; background:#fffbeb; border:1px solid #fde68a; border-radius:12px; display:flex; align-items:center; justify-content:space-between;">
+      <span style="font-size:.9rem; color:#1a1a2e;">Selected: <strong id="selectedModelName">{{ model_results | selectattr('recommended') | map(attribute='model_name') | first }}</strong></span>
+      <form method="POST" action="/build-model/select-model">
+        <input type="hidden" name="model_key" id="selectedModelKey" value="{{ model_results | selectattr('recommended') | map(attribute='model_key') | first }}">
+        <input type="hidden" name="artifact_path" id="selectedArtifactPath" value="{{ model_results | selectattr('recommended') | map(attribute='artifact_path') | first }}">
+        <button type="submit" style="display:flex; align-items:center; gap:.5rem; background:var(--orange); color:white; padding:.7rem 1.3rem; border-radius:10px; font-size:.88rem; font-weight:600; border:none; cursor:pointer;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          Use This Model
+        </button>
+      </form>
+    </div>
+  </div>
 
   <!-- Summary cards — from recommended model -->
   {% set best = namespace(item=none) %}
@@ -180,8 +197,23 @@
     {% endif %}
   {% endfor %}
 
+
+  
+    <!-- Predictors used -->
   {% if best.item %}
-  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:.8rem; margin-top:1rem;">
+  <div style="margin-top:1rem; padding:1rem 1.2rem; background:#f9fafb; border:1px solid #e5e7eb; border-radius:10px;">
+    <div style="font-size:.78rem; font-weight:600; color:#6b7280; margin-bottom:.6rem;">Predictors Used ({{ best.item.predictors | length }})</div>
+    <div style="display:flex; flex-wrap:wrap; gap:.4rem;">
+      {% for col in best.item.predictors %}
+      <span style="background:white; border:1px solid #e5e7eb; border-radius:20px; padding:.3rem .8rem; font-size:.8rem; color:#1a1a2e;">{{ col }}</span>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+  
+
+  {% if best.item %}
+  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:.8rem; margin-top:1rem; margin-bottom:1rem;">
     <div style="background:#f9fafb; border:1px solid #e5e7eb; border-radius:10px; padding:.9rem 1.1rem;">
       <div style="font-size:.75rem; color:#6b7280; margin-bottom:.3rem;">Training Rows</div>
       <div style="font-size:1rem; font-weight:700; color:#1a1a2e;">{{ "{:,}".format(best.item.metrics.n_train) }}</div>
@@ -196,13 +228,17 @@
     </div>
   </div>
   {% endif %}
-
 </div>
 {% endif %}
 
 
 {% block extra_scripts %}
+<script>
+  const modelData = {{ model_results | tojson }};
+</script>
 <script src="{{ url_for('static', filename='js/build_model.js') }}"></script>
+
+
 {% endblock %}
 
 {% endblock %}

@@ -142,6 +142,8 @@ def set_target():
     return redirect(url_for('build_model'))
 
 
+
+
 @app.route("/build-model")
 def build_model():
     uploaded_file = session.get('uploaded_file')
@@ -172,7 +174,7 @@ def build_model():
                            valid_targets=valid_targets,
                            target_column=target_column,
                            predictors=predictors,
-                           problem_type=problem_type, 
+                           problem_type=problem_type,
                            target_confirmed=session.get('target_confirmed'),
                            model_results=session.get('model_results'))
 
@@ -223,6 +225,12 @@ def confirm_model():
     session['model_results'] = results
     session['artifact_path'] = best.get('artifact_path') if successful else None
 
+    return redirect(url_for('build_model'))
+
+@app.route("/build-model/select-model", methods=["POST"])
+def select_model():
+    session['selected_model_key'] = request.form.get('model_key')
+    session['artifact_path'] = request.form.get('artifact_path')
     return redirect(url_for('build_model'))
 
 if __name__ == "__main__":
