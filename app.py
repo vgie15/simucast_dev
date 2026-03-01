@@ -187,6 +187,7 @@ def reset_model():
 
 
 from services.build_model.model_list.model1 import run as run_ridge
+from services.build_model.model_list.model2 import run as run_rf
 
 @app.route("/build-model/confirm", methods=["POST"])
 def confirm_model():
@@ -199,19 +200,28 @@ def confirm_model():
 
     fname = session.get('synthetic_file') if active_dataset == 'synthetic' else uploaded_file
     filepath = os.path.join(app.config['UPLOAD_FOLDER'], fname)
-
     df = pd.read_csv(filepath) if fname.endswith('.csv') else pd.read_excel(filepath)
+    dataset_id = uploaded_file.rsplit('.', 1)[0]
 
-    result = run_ridge(
-        df=df,
-        target_column=target_column,
-        predictor_columns=predictors,
-        artifacts_dir='artifacts',
-        dataset_id=uploaded_file.rsplit('.', 1)[0]
-    )
+    results = []
+    for run_fn in [run_ridge, run_rf]:
+        result = run_fn(
+            df=df,
+            target_column=target_column,
+            predictor_columns=predictors,
+            artifacts_dir='artifacts',
+            dataset_id=dataset_id
+        )
+        results.append(result)
 
-    session['model_results'] = [result]
-    session['artifact_path'] = result.get('artifact_path')
+    # Mark best performing model by holdout R²
+    successful = [r for r in results if r.get('success')]
+    if successful:
+        best = max(successful, key=lambda r: r['metrics'].get('holdout_r2', -999))
+        best['recommended'] = True
+
+    session['model_results'] = results
+    session['artifact_path'] = best.get('artifact_path') if successful else None
 
     return redirect(url_for('build_model'))
 

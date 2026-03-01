@@ -117,73 +117,86 @@
   </div>
   <p style="font-size:.85rem; color:#6b7280; margin-bottom:1.5rem;">Evaluated using 80% training / 20% testing split</p>
 
+  <!-- Single table — rows loop inside -->
+  <div style="overflow-x:auto; border:1px solid #e5e7eb; border-radius:12px; margin-bottom:1rem;">
+    <table style="width:100%; border-collapse:collapse; font-size:.88rem;">
+      <thead>
+        <tr style="background:#f9fafb; border-bottom:1px solid #e5e7eb;">
+          <th style="text-align:left; padding:.85rem 1.2rem; font-size:.78rem; font-weight:600; color:#6b7280;">Model</th>
+          <th style="text-align:right; padding:.85rem 1.2rem; font-size:.78rem; font-weight:600; color:#6b7280;">R² Score</th>
+          <th style="text-align:right; padding:.85rem 1.2rem; font-size:.78rem; font-weight:600; color:#6b7280;">RMSE</th>
+          <th style="text-align:right; padding:.85rem 1.2rem; font-size:.78rem; font-weight:600; color:#6b7280;">MAE</th>
+          <th style="text-align:right; padding:.85rem 1.2rem; font-size:.78rem; font-weight:600; color:#6b7280;">Train R²</th>
+          <th style="text-align:right; padding:.85rem 1.2rem; font-size:.78rem; font-weight:600; color:#6b7280;">Predictors</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for result in model_results %}
+        {% if result.success %}
+        <tr style="border-bottom:1px solid #f0f0f0; {% if result.recommended %}background:#fffbf5;{% endif %}">
+          <td style="padding:.85rem 1.2rem; color:#1a1a2e;">
+            <div style="display:flex; align-items:center; gap:.6rem;">
+              {% if result.recommended %}
+              <div style="width:3px; height:32px; background:var(--orange); border-radius:2px; margin-left:-1.2rem; margin-right:.3rem;"></div>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="9 12 12 15 16 9"/></svg>
+              <strong>{{ result.model_name }}</strong>
+              <span style="background:var(--orange); color:white; font-size:.7rem; font-weight:700; padding:.2rem .6rem; border-radius:20px;">Recommended</span>
+              {% else %}
+              {{ result.model_name }}
+              {% endif %}
+            </div>
+          </td>
+          <td style="text-align:right; padding:.85rem 1.2rem; {% if result.recommended %}font-weight:700;{% endif %}">{{ result.metrics.holdout_r2 }}</td>
+          <td style="text-align:right; padding:.85rem 1.2rem;">{{ result.metrics.holdout_rmse }}</td>
+          <td style="text-align:right; padding:.85rem 1.2rem;">{{ result.metrics.holdout_mae }}</td>
+          <td style="text-align:right; padding:.85rem 1.2rem; color:#6b7280;">{{ result.metrics.train_r2 }}</td>
+          <td style="text-align:right; padding:.85rem 1.2rem; color:#6b7280;">{{ result.metrics.n_predictors }}</td>
+        </tr>
+        {% else %}
+        <tr style="border-bottom:1px solid #f0f0f0;">
+          <td style="padding:.85rem 1.2rem; color:#dc2626;">{{ result.model_name }}</td>
+          <td colspan="5" style="padding:.85rem 1.2rem; color:#dc2626; font-size:.82rem;">❌ {{ result.error }}</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Warnings — collected from all models, shown once -->
   {% for result in model_results %}
-
-    {% if not result.success %}
-    <div style="background:#fef2f2; border:1px solid #fca5a5; border-radius:10px; padding:1rem 1.2rem; font-size:.88rem; color:#dc2626;">
-      ❌ {{ result.error }}
-    </div>
-
-    {% else %}
-    <!-- Warnings -->
     {% if result.warnings %}
-    <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:10px; padding:1rem 1.2rem; margin-bottom:1rem; font-size:.82rem; color:#92400e;">
-      {% for w in result.warnings %}
-      <div>⚠ {{ w }}</div>
-      {% endfor %}
-    </div>
+    {% for w in result.warnings %}
+    <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:8px; padding:.7rem 1rem; margin-bottom:.4rem; font-size:.82rem; color:#92400e;">⚠ {{ w }}</div>
+    {% endfor %}
     {% endif %}
-
-    <!-- Metrics table -->
-    <div style="overflow-x:auto; border:1px solid #e5e7eb; border-radius:12px;">
-      <table style="width:100%; border-collapse:collapse; font-size:.88rem;">
-        <thead>
-          <tr style="background:#f9fafb; border-bottom:1px solid #e5e7eb;">
-            <th style="text-align:left; padding:.85rem 1.2rem; font-size:.78rem; font-weight:600; color:#6b7280;">Model</th>
-            <th style="text-align:right; padding:.85rem 1.2rem; font-size:.78rem; font-weight:600; color:#6b7280;">R² Score</th>
-            <th style="text-align:right; padding:.85rem 1.2rem; font-size:.78rem; font-weight:600; color:#6b7280;">RMSE</th>
-            <th style="text-align:right; padding:.85rem 1.2rem; font-size:.78rem; font-weight:600; color:#6b7280;">MAE</th>
-            <th style="text-align:right; padding:.85rem 1.2rem; font-size:.78rem; font-weight:600; color:#6b7280;">Train R²</th>
-            <th style="text-align:right; padding:.85rem 1.2rem; font-size:.78rem; font-weight:600; color:#6b7280;">Predictors</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr style="background:#fffbf5;">
-            <td style="padding:.85rem 1.2rem; color:#1a1a2e;">
-              <div style="display:flex; align-items:center; gap:.6rem;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="9 12 12 15 16 9"/></svg>
-                <strong>{{ result.model_name }}</strong>
-                <span style="background:var(--orange); color:white; font-size:.7rem; font-weight:700; padding:.2rem .6rem; border-radius:20px;">Active</span>
-              </div>
-            </td>
-            <td style="text-align:right; padding:.85rem 1.2rem; color:#1a1a2e; font-weight:600;">{{ result.metrics.holdout_r2 }}</td>
-            <td style="text-align:right; padding:.85rem 1.2rem; color:#1a1a2e;">{{ result.metrics.holdout_rmse }}</td>
-            <td style="text-align:right; padding:.85rem 1.2rem; color:#1a1a2e;">{{ result.metrics.holdout_mae }}</td>
-            <td style="text-align:right; padding:.85rem 1.2rem; color:#6b7280;">{{ result.metrics.train_r2 }}</td>
-            <td style="text-align:right; padding:.85rem 1.2rem; color:#6b7280;">{{ result.metrics.n_predictors }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Sample info -->
-    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:.8rem; margin-top:1rem;">
-      <div style="background:#f9fafb; border:1px solid #e5e7eb; border-radius:10px; padding:.9rem 1.1rem;">
-        <div style="font-size:.75rem; color:#6b7280; margin-bottom:.3rem;">Training Rows</div>
-        <div style="font-size:1rem; font-weight:700; color:#1a1a2e;">{{ "{:,}".format(result.metrics.n_train) }}</div>
-      </div>
-      <div style="background:#f9fafb; border:1px solid #e5e7eb; border-radius:10px; padding:.9rem 1.1rem;">
-        <div style="font-size:.75rem; color:#6b7280; margin-bottom:.3rem;">Testing Rows</div>
-        <div style="font-size:1rem; font-weight:700; color:#1a1a2e;">{{ "{:,}".format(result.metrics.n_test) }}</div>
-      </div>
-      <div style="background:#f9fafb; border:1px solid #e5e7eb; border-radius:10px; padding:.9rem 1.1rem;">
-        <div style="font-size:.75rem; color:#6b7280; margin-bottom:.3rem;">Target</div>
-        <div style="font-size:1rem; font-weight:700; color:#1a1a2e;">{{ result.target }}</div>
-      </div>
-    </div>
-    {% endif %}
-
   {% endfor %}
+
+  <!-- Summary cards — from recommended model -->
+  {% set best = namespace(item=none) %}
+  {% for result in model_results %}
+    {% if result.recommended is defined and result.recommended %}
+      {% set best.item = result %}
+    {% endif %}
+  {% endfor %}
+
+  {% if best.item %}
+  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:.8rem; margin-top:1rem;">
+    <div style="background:#f9fafb; border:1px solid #e5e7eb; border-radius:10px; padding:.9rem 1.1rem;">
+      <div style="font-size:.75rem; color:#6b7280; margin-bottom:.3rem;">Training Rows</div>
+      <div style="font-size:1rem; font-weight:700; color:#1a1a2e;">{{ "{:,}".format(best.item.metrics.n_train) }}</div>
+    </div>
+    <div style="background:#f9fafb; border:1px solid #e5e7eb; border-radius:10px; padding:.9rem 1.1rem;">
+      <div style="font-size:.75rem; color:#6b7280; margin-bottom:.3rem;">Testing Rows</div>
+      <div style="font-size:1rem; font-weight:700; color:#1a1a2e;">{{ "{:,}".format(best.item.metrics.n_test) }}</div>
+    </div>
+    <div style="background:#f9fafb; border:1px solid #e5e7eb; border-radius:10px; padding:.9rem 1.1rem;">
+      <div style="font-size:.75rem; color:#6b7280; margin-bottom:.3rem;">Target</div>
+      <div style="font-size:1rem; font-weight:700; color:#1a1a2e;">{{ best.item.target }}</div>
+    </div>
+  </div>
+  {% endif %}
+
 </div>
 {% endif %}
 
