@@ -46,11 +46,11 @@ UNIQUE_RATIO_ID_THRESHOLD = 0.98
 LEAKAGE_CORR_THRESHOLD    = 0.90
 
 # High-cardinality categorical protection
-MAX_CATEGORIES            = 100      # hard cap
-MAX_CATEGORY_RATIO        = 0.20     # OR cap by ratio of unique categories to rows
+MAX_CATEGORIES            = 100
+MAX_CATEGORY_RATIO        = 0.20
 
 # Overfitting warning threshold
-OVERFIT_R2_GAP_THRESHOLD  = 0.15     # warn if train R² - test R² > this
+OVERFIT_R2_GAP_THRESHOLD  = 0.15
 
 # Ridge regularization strength
 RIDGE_ALPHA               = 1.0
@@ -63,7 +63,7 @@ MODEL_KEY  = "ridge_regression"
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Main entry point — called by the build_model blueprint
+# Main entry point
 # ─────────────────────────────────────────────────────────────────────────────
 
 def run(
@@ -71,26 +71,10 @@ def run(
     target_column: str,
     predictor_columns: Optional[list] = None,
     artifacts_dir: str = "artifacts",
-    dataset_id: str = "dataset"
+    dataset_id: str = "dataset",
+    test_size: float = TEST_SIZE,
+    ridge_alpha: float = RIDGE_ALPHA
 ) -> dict:
-    """
-    Balanced Ridge Regression pipeline (holdout eval only).
-
-    Returns:
-    {
-        "success":   bool,
-        "error":     str | None,
-        "warnings":  list[str],
-        "model_id":  str,
-        "model_name": str,
-        "model_key": str,
-        "metrics":   dict,
-        "predictors": list,
-        "feature_names_out": list,
-        "target":    str,
-        "artifact_path": str,
-    }
-    """
     ui_warnings: List[str] = []
 
     # ── 1) VALIDATE ───────────────────────────────────────────────────────────
@@ -98,7 +82,7 @@ def run(
     if err:
         return _fail(err)
 
-    # Drop rows where target is missing (y imputation = drop)
+    # Drop rows where target is missing
     before = len(df)
     df = df.dropna(subset=[target_column]).reset_index(drop=True)
     dropped = before - len(df)
@@ -135,18 +119,18 @@ def run(
     cat_cols = [c for c in X.columns if c not in num_cols]
 
     # ── 4) BUILD PIPELINE ─────────────────────────────────────────────────────
-    pipeline = _build_pipeline(num_cols, cat_cols)
+    pipeline = _build_pipeline(num_cols, cat_cols, alpha=ridge_alpha)
 
     # ── 5) HOLDOUT SPLIT + FIT ────────────────────────────────────────────────
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=TEST_SIZE, random_state=RANDOM_STATE
+        X, y, test_size=test_size, random_state=RANDOM_STATE
     )
 
     pipeline.fit(X_train, y_train)
 
-    # Evaluate on train + test (for overfitting warning)
+    # Evaluate on train + test
     train_scores = _evaluate(pipeline, X_train, y_train)
-    test_scores  = _evaluate(pipeline, X_test, y_test)
+    test_scores  = _evaluate(pipeline, X_test,  y_test)
 
     # Overfitting heuristic warning
     r2_gap = train_scores["r2"] - test_scores["r2"]
@@ -157,29 +141,22 @@ def run(
         )
 
     metrics = {
-        # Holdout split (main metrics)
         "holdout_r2":   round(test_scores["r2"],   4),
         "holdout_rmse": round(test_scores["rmse"], 4),
         "holdout_mae":  round(test_scores["mae"],  4),
-
-        # Train metrics (for diagnostics)
         "train_r2":     round(train_scores["r2"],   4),
         "train_rmse":   round(train_scores["rmse"], 4),
         "train_mae":    round(train_scores["mae"],  4),
-
-        # Sample info
         "n_train":      int(len(X_train)),
         "n_test":       int(len(X_test)),
         "n_predictors": int(len(x_cols)),
-
-        # Model params
-        "ridge_alpha":  float(RIDGE_ALPHA),
+        "ridge_alpha":  float(ridge_alpha),
+        "test_size":    float(test_size),
     }
 
-    # Cap warnings to avoid UI spam
     ui_warnings = _cap_warnings(ui_warnings)
 
-    # ── 6) FEATURE NAMES (post-encoding) ─────────────────────────────────────
+    # ── 6) FEATURE NAMES ──────────────────────────────────────────────────────
     feature_names_out = _get_feature_names(pipeline, num_cols, cat_cols)
 
     # ── 7) SAVE ARTIFACTS ─────────────────────────────────────────────────────
@@ -215,7 +192,7 @@ def run(
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Validation helpers
+# Validation
 # ─────────────────────────────────────────────────────────────────────────────
 
 def _validate(df: pd.DataFrame, target: str) -> Optional[str]:
@@ -238,10 +215,13 @@ def _validate(df: pd.DataFrame, target: str) -> Optional[str]:
     return None
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# Predictor selection
+# ─────────────────────────────────────────────────────────────────────────────
+
 def _auto_select_predictors(df: pd.DataFrame, target: str) -> Tuple[List[str], List[str]]:
     candidates = [c for c in df.columns if c != target]
-    selected, log = _filter_predictors(df, candidates, target)
-    return selected, log
+    return _filter_predictors(df, candidates, target)
 
 
 def _select_user_predictors(df: pd.DataFrame, predictors: list, target: str) -> Tuple[List[str], List[str]]:
@@ -270,9 +250,8 @@ def _filter_predictors(df: pd.DataFrame, cols: list, target: str) -> Tuple[List[
     n = len(df)
 
     for col in cols:
-        # datetime-like exclusion (prevents huge one-hot)
         if _is_datetime_like(df[col]):
-            log.append(f"'{col}' excluded — datetime-like column (not used for this model).")
+            log.append(f"'{col}' excluded — datetime-like column.")
             continue
 
         missing_ratio = float(df[col].isna().mean())
@@ -291,14 +270,12 @@ def _filter_predictors(df: pd.DataFrame, cols: list, target: str) -> Tuple[List[
             log.append(f"'{col}' excluded — {missing_ratio:.0%} values are missing.")
             continue
 
-        # high-cardinality categorical exclusion
         if not pd.api.types.is_numeric_dtype(df[col]):
             ratio = (nunique / n) if n else 0.0
             if nunique > MAX_CATEGORIES or ratio > MAX_CATEGORY_RATIO:
                 log.append(f"'{col}' excluded — too many categories ({nunique}).")
                 continue
 
-        # leakage check (numeric only)
         if pd.api.types.is_numeric_dtype(df[col]):
             try:
                 corr = df[[col, target]].dropna().corr().loc[col, target]
@@ -320,14 +297,12 @@ def _is_datetime_like(series: pd.Series) -> bool:
     try:
         if pd.api.types.is_datetime64_any_dtype(series):
             return True
-
         if series.dtype == "object":
             sample = series.dropna().astype(str).head(50)
             if len(sample) == 0:
                 return False
             parsed = pd.to_datetime(sample, errors="coerce")
             return float(parsed.notna().mean()) >= 0.80
-
         return False
     except Exception:
         return False
@@ -343,7 +318,7 @@ def _cap_warnings(warnings_list: List[str]) -> List[str]:
 # Pipeline
 # ─────────────────────────────────────────────────────────────────────────────
 
-def _build_pipeline(num_cols: list, cat_cols: list) -> Pipeline:
+def _build_pipeline(num_cols: list, cat_cols: list, alpha: float = RIDGE_ALPHA) -> Pipeline:
     transformers = []
 
     if num_cols:
@@ -364,16 +339,16 @@ def _build_pipeline(num_cols: list, cat_cols: list) -> Pipeline:
 
     return Pipeline([
         ("preprocessor", preprocessor),
-        ("model",        Ridge(alpha=RIDGE_ALPHA, random_state=RANDOM_STATE)),
+        ("model",        Ridge(alpha=alpha, random_state=RANDOM_STATE)),
     ])
 
 
-def _evaluate(pipeline: Pipeline, X_test, y_test) -> dict:
-    y_pred = pipeline.predict(X_test)
+def _evaluate(pipeline: Pipeline, X, y) -> dict:
+    y_pred = pipeline.predict(X)
     return {
-        "rmse": float(np.sqrt(mean_squared_error(y_test, y_pred))),
-        "mae":  float(mean_absolute_error(y_test, y_pred)),
-        "r2":   float(r2_score(y_test, y_pred)),
+        "rmse": float(np.sqrt(mean_squared_error(y, y_pred))),
+        "mae":  float(mean_absolute_error(y, y_pred)),
+        "r2":   float(r2_score(y, y_pred)),
     }
 
 
@@ -381,11 +356,9 @@ def _get_feature_names(pipeline: Pipeline, num_cols: list, cat_cols: list) -> li
     try:
         pre = pipeline.named_steps["preprocessor"]
         names = list(num_cols)
-
         if cat_cols:
             ohe = pre.named_transformers_["cat"].named_steps["ohe"]
             names += ohe.get_feature_names_out(cat_cols).tolist()
-
         return names
     except Exception:
         return num_cols + cat_cols
@@ -435,11 +408,10 @@ def load_bundle(artifact_path: str) -> dict:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Utility — quick model card for UI
+# Utility
 # ─────────────────────────────────────────────────────────────────────────────
 
 def model_card(metrics: dict) -> dict:
-    """Display-ready summary dict for model card / comparison table."""
     r2 = float(metrics.get("holdout_r2", 0))
     return {
         "name": MODEL_NAME,
@@ -456,6 +428,7 @@ def model_card(metrics: dict) -> dict:
             {"label": "Train rows",   "value": str(metrics.get("n_train", "—"))},
             {"label": "Test rows",    "value": str(metrics.get("n_test", "—"))},
             {"label": "Predictors",   "value": str(metrics.get("n_predictors", "—"))},
+            {"label": "Alpha",        "value": str(metrics.get("ridge_alpha", "—"))},
         ],
     }
 
@@ -470,15 +443,15 @@ def _r2_badge(r2: float) -> str:
 
 def _fail(msg: str) -> dict:
     return {
-        "success": False,
-        "error": msg,
-        "warnings": [],
-        "model_id": "",
-        "model_name": MODEL_NAME,
-        "model_key": MODEL_KEY,
-        "metrics": {},
-        "predictors": [],
+        "success":           False,
+        "error":             msg,
+        "warnings":          [],
+        "model_id":          "",
+        "model_name":        MODEL_NAME,
+        "model_key":         MODEL_KEY,
+        "metrics":           {},
+        "predictors":        [],
         "feature_names_out": [],
-        "target": "",
-        "artifact_path": "",
+        "target":            "",
+        "artifact_path":     "",
     }

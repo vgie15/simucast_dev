@@ -1,0 +1,37 @@
+{
+  "model_id": "rf_students_excel_20260305_164142",
+  "model_name": "Random Forest Regressor",
+  "model_key": "random_forest_regressor",
+  "predictors": [
+    "Age",
+    "Department",
+    "Graduation Year"
+  ],
+  "feature_names_out": [
+    "Age",
+    "Graduation Year",
+    "Department_Biology",
+    "Department_Chemistry",
+    "Department_Computer Science",
+    "Department_Mathematics",
+    "Department_Physics"
+  ],
+  "target": "GPA",
+  "metrics": {
+    "holdout_r2": -0.4198,
+    "holdout_rmse": 0.6762,
+    "holdout_mae": 0.5136,
+    "train_r2": 0.6877,
+    "train_rmse": 0.3334,
+    "train_mae": 0.2675,
+    "n_train": 162,
+    "n_test": 41,
+    "n_predictors": 3,
+    "n_features_out": 7,
+    "rf_n_estimators": 300,
+    "rf_max_depth": null,
+    "rf_min_samples_leaf": 1,
+    "test_size": 0.2
+  },
+  "trained_at": "2026-03-05T16:41:42.097256"
+}

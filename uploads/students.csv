@@ -1,4 +1,5 @@
-StudentID,Name,Age,Email,Department,GPA,GraduationYear
+Credential,Unnamed: 1,Misc,Unnamed: 3,Unnamed: 4,Factors,Unnamed: 6
+StudentID,Name,Age,Email,Department,GPA,Graduation Year
 3336,David Palmer,19,sean43@hotmail.com,Mathematics,3.16,2026
 8774,Andrew Roach,23,vbecker@harvey.com,Chemistry,3.75,2027
 1396,Jonathan Gonzalez,22,hollydavis@gmail.com,Physics,2.95,2027
@@ -10,22 +11,17 @@ StudentID,Name,Age,Email,Department,GPA,GraduationYear
 8721,Michael Kim,25,jacksonhannah@miles.com,Computer Science,3.27,2027
 6622,Emily Davis,18,george02@hotmail.com,Physics,3.09,2030
 3254,Adam Evans,20,bryantmargaret@hernandez.com,Physics,3.42,2026
-8021,Alejandra Galloway,,danielpowers@schmidt.com,Chemistry,2.33,2027
 9477,Cindy Johnston,22,james96@webb.org,Mathematics,3.76,2025
 9144,Taylor Krueger II,20,hleon@smith.net,Computer Science,2.02,2025
-4854,Kimberly Vang,23,,Computer Science,3.35,2030
 3690,Alex Allen,24,shawkaren@smith.net,Physics,3.21,2029
-4462,Dawn Caldwell,24,kelly96@gmail.com,Computer Science,3.92,
 3255,Connie Cline,22,patelmercedes@green.com,Chemistry,3.42,2024
 5446,Christine Smith,21,nicholasmejia@hotmail.com,Computer Science,3.43,2027
 8125,Dana Burke,23,davismichael@yahoo.com,Physics,2.05,2025
 3052,Suzanne Lopez,18,thomasbennett@gmail.com,Computer Science,2.33,2025
-2602,Meagan Thompson,,robert13@gmail.com,Physics,3.68,2028
 1866,Erica Welch,25,hernandezbrent@delgado-terry.com,Mathematics,3.84,2028
 4908,Debra Reilly,21,amy78@jackson.com,Chemistry,3.82,2027
 6711,Rachel Hill,22,elizabeth41@hill-johnson.com,Computer Science,2.99,2026
 1165,Lauren Hill,22,timothy00@lopez.com,Biology,2.49,2024
-7657,Andrea Castro,19,valvarez@hotmail.com,,3.16,2024
 4776,Sarah Cruz,24,melissa92@hicks.com,Physics,3.56,2026
 5711,Teresa Patrick PhD,25,hbrooks@nelson-bennett.info,Physics,3.58,2030
 8511,Brittany Thompson,19,chavezallison@yahoo.com,Chemistry,2.82,2024
@@ -38,15 +34,12 @@ StudentID,Name,Age,Email,Department,GPA,GraduationYear
 3663,Shawna Glover,19,alison62@barrett.com,Biology,2.75,2028
 6423,Susan Galvan,22,theresa04@gmail.com,Chemistry,3.26,2028
 5155,Jason King,24,oliviawalls@hotmail.com,Chemistry,3.74,2024
-1066,Alexander Simmons,19,,Biology,3.26,2028
 5773,James Moore,24,daniel72@long.com,Physics,2.37,2024
 8417,Frank Garza,19,jennifer82@cruz.com,Mathematics,2.67,2027
 4235,Cynthia Parker DVM,22,jasminelewis@washington.com,Mathematics,2.02,2028
-7002,Robert Smith,,amanda74@gmail.com,Chemistry,2.7,2028
 5998,Marie Valdez,18,xwarner@nelson.com,Computer Science,3.5,2030
 9661,Patty Duke,18,sparksanna@gmail.com,Chemistry,3.6,2027
 5144,Teresa Lucas,20,epatel@edwards-smith.info,Biology,3.47,2029
-3719,Melanie Lowe,25,nicolepruitt@bell-gibson.org,Computer Science,3.05,
 9310,Isaiah Morales,25,lutzjason@neal.biz,Physics,3.06,2025
 9271,Connor Fry,19,masseytom@gmail.com,Chemistry,3.94,2030
 4603,Autumn Nguyen,22,john53@hotmail.com,Mathematics,2.13,2030
@@ -72,9 +65,7 @@ StudentID,Name,Age,Email,Department,GPA,GraduationYear
 7081,Paul Brown,22,uyoder@miller.com,Chemistry,3.46,2027
 9812,William Villarreal,20,petersoncheryl@davis-bush.com,Physics,3.92,2030
 1790,Randy Pittman,19,robin33@knapp.com,Physics,3.92,2028
-8268,Alexandra Roth,,kristin46@hotmail.com,Mathematics,2.87,2025
 1383,Stephanie Mitchell,18,michellemoody@williams.com,Chemistry,3.68,2026
-4197,Michelle Kemp,23,susanwilliams@hotmail.com,Computer Science,2.53,
 4517,Corey Hicks,25,fosterglen@gmail.com,Computer Science,3.23,2027
 6733,Melinda Hancock,25,linda93@gmail.com,Biology,2.6,2026
 5406,Julian Smith,22,joseph78@gmail.com,Computer Science,3.84,2029
@@ -84,7 +75,6 @@ StudentID,Name,Age,Email,Department,GPA,GraduationYear
 8526,Joe Kim,23,salinaschristine@gmail.com,Mathematics,3.5,2026
 3257,Tammy Byrd,22,phillipsmith@gmail.com,Mathematics,3.67,2027
 1214,Scott Gomez,24,jacksonjulie@estrada.org,Physics,3.28,2027
-2921,Sean Davis,,tina80@miller-navarro.com,Computer Science,3.97,2024
 1853,Luis Hunter,19,uschultz@palmer-lambert.biz,Biology,3.07,2027
 4418,Rachel Mahoney MD,25,teresamitchell@hernandez.net,Computer Science,2.14,2028
 6729,Christina Woodward,18,juan08@yahoo.com,Physics,3.52,2026
@@ -199,6 +189,3 @@ StudentID,Name,Age,Email,Department,GPA,GraduationYear
 9179,Theresa Hughes,21,mstanley@yahoo.com,Mathematics,3.23,2025
 4463,Steven Golden,19,nvasquez@yahoo.com,Computer Science,3.9,2025
 6178,Miss April Smith,20,logansanchez@manning.com,Mathematics,3.15,2028
-8774,Andrew Roach,23,vbecker@harvey.com,Chemistry,3.75,2027
-9179,Theresa Hughes,21,mstanley@yahoo.com,Mathematics,3.23,2025
-3406,Jonathan Blanchard,25,jonathanfoster@sanchez.com,Computer Science,2.06,2026

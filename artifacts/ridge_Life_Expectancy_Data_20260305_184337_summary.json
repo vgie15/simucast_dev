@@ -1,0 +1,28 @@
+{
+  "model_id": "ridge_Life_Expectancy_Data_20260305_184337",
+  "model_name": "Ridge Regression",
+  "model_key": "ridge_regression",
+  "predictors": [
+    "Year",
+    "Population"
+  ],
+  "feature_names_out": [
+    "Year",
+    "Population"
+  ],
+  "target": "Life expectancy ",
+  "metrics": {
+    "holdout_r2": 0.0253,
+    "holdout_rmse": 9.1821,
+    "holdout_mae": 7.6255,
+    "train_r2": 0.0305,
+    "train_rmse": 9.4282,
+    "train_mae": 7.7783,
+    "n_train": 2342,
+    "n_test": 586,
+    "n_predictors": 2,
+    "ridge_alpha": 1.0,
+    "test_size": 0.2
+  },
+  "trained_at": "2026-03-05T18:43:37.027133"
+}

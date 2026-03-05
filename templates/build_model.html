@@ -90,28 +90,255 @@
     </div>
 
  </div> 
-
-  <!-- Bottom banner -->
+<!-- Predictor selector + confirm form -->
   {% if target_confirmed %}
-  <div style="margin-top:1.5rem; padding:1rem 1.5rem; background:#f9fafb; border:1px solid #e5e7eb; border-radius:12px; display:flex; align-items:center; justify-content:space-between;">
-    <span style="font-size:.88rem; color:#6b7280;">Target variable is locked. To change it, reset the workflow.</span>
-    <form method="POST" action="/build-model/reset">
-      <button type="submit" style="padding:.6rem 1.2rem; border:1.5px solid #e5e7eb; border-radius:8px; font-size:.85rem; font-weight:600; color:#1a1a2e; background:white; cursor:pointer;">
-        Reset Workflow
-      </button>
+    <div style="margin-top:1.5rem; padding:1rem 1.5rem; background:#f9fafb; border:1px solid #e5e7eb; border-radius:12px; display:flex; align-items:center; justify-content:space-between;">
+      <span style="font-size:.88rem; color:#6b7280;">Target variable is locked. To change it, reset the workflow.</span>
+      <form method="POST" action="/build-model/reset">
+        <button type="submit" style="padding:.6rem 1.2rem; border:1.5px solid #e5e7eb; border-radius:8px; font-size:.85rem; font-weight:600; color:#1a1a2e; background:white; cursor:pointer;">
+          Reset Workflow
+        </button>
+      </form>
+    </div>
+ 
+    {% elif target_column %}
+
+    <!-- ── Confirm modal ─────────────────────────────────────────────────── -->
+    <div id="confirmModal" style="display:none; position:fixed; inset:0; z-index:1000;
+      background:rgba(0,0,0,.45); align-items:center; justify-content:center;">
+      <div style="background:white; border-radius:16px; padding:2rem; max-width:420px; width:90%;
+        box-shadow:0 20px 60px rgba(0,0,0,.2); animation:modalIn .2s ease;">
+        
+        <!-- Icon -->
+        <div style="width:48px; height:48px; border-radius:12px; background:#fff7ed;
+          display:flex; align-items:center; justify-content:center; margin-bottom:1.2rem;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--orange,#f97316)" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        </div>
+
+        <div style="font-size:1.05rem; font-weight:700; color:#1a1a2e; margin-bottom:.5rem;">
+          Lock in your selections?
+        </div>
+        <div style="font-size:.875rem; color:#6b7280; line-height:1.6; margin-bottom:.4rem;">
+          You're about to lock the target variable <strong style="color:#1a1a2e;">{{ target_column }}</strong> and train all models using the predictors you selected.
+        </div>
+        <div id="modalPredictorList" style="font-size:.82rem; color:#6b7280; margin-bottom:1.4rem;
+          background:#f9fafb; border:1px solid #e5e7eb; border-radius:8px; padding:.7rem 1rem; line-height:1.7;">
+        </div>
+        <div style="font-size:.8rem; color:#9ca3af; margin-bottom:1.5rem;">
+          You can reset and start over at any time.
+        </div>
+
+        <div style="display:flex; gap:.75rem;">
+          <button type="button" onclick="closeModal()"
+            style="flex:1; padding:.7rem; border:1.5px solid #e5e7eb; border-radius:10px;
+            font-size:.88rem; font-weight:600; color:#6b7280; background:white; cursor:pointer;">
+            Go back
+          </button>
+          <button type="button" onclick="submitConfirm()"
+            style="flex:2; padding:.7rem; background:var(--orange,#f97316); color:white;
+            border:none; border-radius:10px; font-size:.88rem; font-weight:600; cursor:pointer;
+            display:flex; align-items:center; justify-content:center; gap:.5rem;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+            Yes, lock &amp; evaluate
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Predictor selector + confirm form -->
+    <form method="POST" action="/build-model/confirm" id="predictorForm">
+      <div style="margin-top:1.2rem; padding:1rem 1.2rem; background:#f9fafb; border:1px solid #e5e7eb; border-radius:12px;">
+        <div style="font-weight:700; font-size:.9rem; color:#1a1a2e; margin-bottom:.2rem;">Predictor Columns</div>
+        <div style="font-size:.8rem; color:#6b7280; margin-bottom:1rem;">
+          Select which columns the model should use. The bar shows how strongly each column relates to your target.
+        </div>
+
+        <!-- Quick-select buttons -->
+        <div style="display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:1rem; padding-bottom:.9rem; border-bottom:1px solid #e5e7eb;">
+          <span style="font-size:.78rem; color:#6b7280; align-self:center; margin-right:.25rem;">Select:</span>
+          <button type="button" onclick="selectByStrength('all')"
+            style="font-size:.78rem; font-weight:600; padding:.3rem .8rem; border-radius:20px; border:1.5px solid #d1d5db; background:white; color:#1a1a2e; cursor:pointer;">
+            All
+          </button>
+          <button type="button" onclick="selectByStrength('strong')"
+            style="font-size:.78rem; font-weight:600; padding:.3rem .8rem; border-radius:20px; border:1.5px solid #16a34a; background:#f0fdf4; color:#15803d; cursor:pointer;">
+            ● Strong only
+          </button>
+          <button type="button" onclick="selectByStrength('moderate')"
+            style="font-size:.78rem; font-weight:600; padding:.3rem .8rem; border-radius:20px; border:1.5px solid #f59e0b; background:#fefce8; color:#92400e; cursor:pointer;">
+            ● Moderate &amp; above
+          </button>
+          <button type="button" onclick="selectByStrength('none')"
+            style="font-size:.78rem; font-weight:600; padding:.3rem .8rem; border-radius:20px; border:1.5px solid #e5e7eb; background:white; color:#6b7280; cursor:pointer;">
+            Clear all
+          </button>
+        </div>
+
+        <!-- Validation error -->
+        <div id="noneSelectedError" style="display:none; background:#fef2f2; border:1px solid #fecaca;
+          border-radius:8px; padding:.65rem 1rem; margin-bottom:.8rem; font-size:.82rem; color:#dc2626;
+          display:none; align-items:center; gap:.5rem;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          Please select at least one predictor column before proceeding.
+        </div>
+
+        <!-- Predictor rows -->
+        <div style="display:flex; flex-direction:column; gap:.5rem;" id="predictorList">
+          {% for col in valid_targets %}
+            {% if col != target_column %}
+
+            {% set score = (importance[col] if importance and col in importance else 0) %}
+            {% set pct   = (score * 100) | round | int %}
+
+            {% if pct >= 60 %}
+              {% set bar_color = '#16a34a' %}
+              {% set tag_text  = 'Strong' %}
+              {% set tag_bg    = '#dcfce7' %}
+              {% set tag_fg    = '#15803d' %}
+              {% set strength  = 'strong' %}
+            {% elif pct >= 30 %}
+              {% set bar_color = '#f59e0b' %}
+              {% set tag_text  = 'Moderate' %}
+              {% set tag_bg    = '#fef9c3' %}
+              {% set tag_fg    = '#92400e' %}
+              {% set strength  = 'moderate' %}
+            {% else %}
+              {% set bar_color = '#e5e7eb' %}
+              {% set tag_text  = 'Weak' %}
+              {% set tag_bg    = '#f3f4f6' %}
+              {% set tag_fg    = '#6b7280' %}
+              {% set strength  = 'weak' %}
+            {% endif %}
+
+            <label data-strength="{{ strength }}" data-col="{{ col }}"
+              style="display:flex; align-items:center; gap:.75rem; background:white; border:1.5px solid #e5e7eb;
+              border-radius:10px; padding:.6rem 1rem; cursor:pointer; transition:border-color .15s;"
+              onmouseover="this.style.borderColor='var(--orange,#f97316)'"
+              onmouseout="syncBorder(this)">
+
+              <input type="checkbox" name="predictors" value="{{ col }}"
+                class="predictor-cb"
+                onchange="syncBorder(this.closest('label')); clearError();"
+                style="accent-color:var(--orange,#f97316); width:16px; height:16px; flex-shrink:0; cursor:pointer;">
+
+              <span style="font-size:.85rem; font-weight:600; color:#1a1a2e; min-width:90px; flex-shrink:0;">{{ col }}</span>
+
+              <div style="flex:1; display:flex; align-items:center; gap:.6rem;">
+                <div style="flex:1; height:6px; background:#f3f4f6; border-radius:99px; overflow:hidden;">
+                  <div style="width:{{ pct }}%; height:100%; background:{{ bar_color }}; border-radius:99px;"></div>
+                </div>
+                <span style="font-size:.75rem; color:#6b7280; min-width:32px; text-align:right;">{{ pct }}%</span>
+              </div>
+
+              <span style="font-size:.72rem; font-weight:700; padding:.2rem .55rem; border-radius:20px;
+                background:{{ tag_bg }}; color:{{ tag_fg }}; flex-shrink:0;">
+                {{ tag_text }}
+              </span>
+            </label>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <!-- Legend -->
+        <div style="display:flex; gap:1rem; margin-top:.9rem; padding-top:.7rem; border-top:1px solid #f0f0f0;">
+          <span style="font-size:.73rem; color:#6b7280; display:flex; align-items:center; gap:.3rem;">
+            <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#16a34a;"></span> Strong (≥60%)
+          </span>
+          <span style="font-size:.73rem; color:#6b7280; display:flex; align-items:center; gap:.3rem;">
+            <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#f59e0b;"></span> Moderate (30–59%)
+          </span>
+          <span style="font-size:.73rem; color:#6b7280; display:flex; align-items:center; gap:.3rem;">
+            <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#e5e7eb; border:1px solid #d1d5db;"></span> Weak (&lt;30%)
+          </span>
+        </div>
+      </div>
+
+      <div style="margin-top:1rem; padding:1rem 1.5rem; background:#fffbeb; border:1px solid #fde68a;
+        border-radius:12px; display:flex; align-items:center; justify-content:space-between;">
+        <span style="font-size:.9rem; color:#1a1a2e;">Ready to proceed? This will lock your target variable and evaluate all models.</span>
+        <button type="button" onclick="handleConfirmClick()"
+          style="display:flex; align-items:center; gap:.5rem; background:var(--orange,#f97316); color:white;
+          padding:.7rem 1.3rem; border-radius:10px; font-size:.88rem; font-weight:600; border:none; cursor:pointer;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+          Confirm &amp; Evaluate Models
+        </button>
+      </div>
     </form>
-  </div>
-  {% elif target_column %}
-  <div style="margin-top:1.5rem; padding:1rem 1.5rem; background:#fffbeb; border:1px solid #fde68a; border-radius:12px; display:flex; align-items:center; justify-content:space-between;">
-    <span style="font-size:.9rem; color:#1a1a2e;">Ready to proceed? This will lock your target variable and evaluate all models.</span>
-    <form method="POST" action="/build-model/confirm">
-      <button type="submit" style="display:flex; align-items:center; gap:.5rem; background:var(--orange); color:white; padding:.7rem 1.3rem; border-radius:10px; font-size:.88rem; font-weight:600; border:none; cursor:pointer;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        Confirm & Evaluate Models
-      </button>
-    </form>
-  </div>
-  {% endif %}
+
+    <style>
+      @keyframes modalIn {
+        from { opacity:0; transform:scale(.95) translateY(10px); }
+        to   { opacity:1; transform:scale(1)  translateY(0); }
+      }
+    </style>
+
+    <script>
+      function selectByStrength(level) {
+        document.querySelectorAll('#predictorList label[data-strength]').forEach(lbl => {
+          const cb = lbl.querySelector('input[type=checkbox]');
+          const s  = lbl.dataset.strength;
+          cb.checked = level === 'all'
+            ? true
+            : level === 'strong'   ? s === 'strong'
+            : level === 'moderate' ? (s === 'strong' || s === 'moderate')
+            : false;
+          syncBorder(lbl);
+        });
+        clearError();
+      }
+
+      function syncBorder(lbl) {
+        const cb = lbl.querySelector('input[type=checkbox]');
+        lbl.style.borderColor = cb && cb.checked ? 'var(--orange,#f97316)' : '#e5e7eb';
+      }
+
+      function clearError() {
+        document.getElementById('noneSelectedError').style.display = 'none';
+      }
+
+      function handleConfirmClick() {
+        const checked = document.querySelectorAll('#predictorList input[type=checkbox]:checked');
+        if (checked.length === 0) {
+          const err = document.getElementById('noneSelectedError');
+          err.style.display = 'flex';
+          err.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+
+        // Build the selected column names list for the modal
+        const names = Array.from(checked).map(cb => cb.value);
+        document.getElementById('modalPredictorList').innerHTML =
+          '<strong style="color:#1a1a2e;">Selected predictors (' + names.length + '):</strong><br>' +
+          names.join(' &nbsp;·&nbsp; ');
+
+        document.getElementById('confirmModal').style.display = 'flex';
+      }
+
+      function closeModal() {
+        document.getElementById('confirmModal').style.display = 'none';
+      }
+
+      function submitConfirm() {
+        document.getElementById('confirmModal').style.display = 'none';
+        document.getElementById('predictorForm').submit();
+      }
+
+      // Close modal on backdrop click
+      document.getElementById('confirmModal').addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+      });
+    </script>
+
+    {% endif %}
 
 </div>
 
@@ -140,19 +367,21 @@
         </tr>
       </thead>
       <tbody>
+        {% set selected_key = session.get('selected_model_key') %}
         {% for result in model_results %}
         {% if result.success %}
         <tr onclick="selectModel('{{ loop.index0 }}')"
             id="row-{{ loop.index0 }}"
-            style="border-bottom:1px solid #f0f0f0; cursor:pointer; {% if result.recommended %}background:#fffbf5;{% endif %}">
+            style="border-bottom:1px solid #f0f0f0; cursor:pointer;
+              {% if selected_key == result.model_key or (not selected_key and result.recommended) %}background:#fffbf5;{% endif %}">
           <td style="padding:.85rem 1.2rem; color:#1a1a2e;">
             <div style="display:flex; align-items:center; gap:.6rem;">
-              <!-- Radio indicator -->
               <div id="radio-{{ loop.index0 }}" style="width:18px; height:18px; border-radius:50%; border:2px solid #d1d5db; flex-shrink:0;
-                {% if result.recommended %}border-color:var(--orange); background:radial-gradient(circle, var(--orange) 45%, white 46%);{% endif %}">
+                {% if selected_key == result.model_key or (not selected_key and result.recommended) %}
+                  border-color:var(--orange); background:radial-gradient(circle, var(--orange) 45%, white 46%);
+                {% endif %}">
               </div>
               {% if result.recommended %}
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="9 12 12 15 16 9"/></svg>
               <strong>{{ result.model_name }}</strong>
               <span style="background:var(--orange); color:white; font-size:.7rem; font-weight:700; padding:.2rem .6rem; border-radius:20px;">Recommended</span>
               {% else %}
@@ -176,17 +405,30 @@
       </tbody>
     </table>
 
-    <div id="modelSelectBanner" style="margin-top:1rem; padding:1rem 1.5rem; background:#fffbeb; border:1px solid #fde68a; border-radius:12px; display:flex; align-items:center; justify-content:space-between;">
-      <span style="font-size:.9rem; color:#1a1a2e;">Selected: <strong id="selectedModelName">{{ model_results | selectattr('recommended') | map(attribute='model_name') | first }}</strong></span>
-      <form method="POST" action="/build-model/select-model">
-        <input type="hidden" name="model_key" id="selectedModelKey" value="{{ model_results | selectattr('recommended') | map(attribute='model_key') | first }}">
-        <input type="hidden" name="artifact_path" id="selectedArtifactPath" value="{{ model_results | selectattr('recommended') | map(attribute='artifact_path') | first }}">
-        <button type="submit" style="display:flex; align-items:center; gap:.5rem; background:var(--orange); color:white; padding:.7rem 1.3rem; border-radius:10px; font-size:.88rem; font-weight:600; border:none; cursor:pointer;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-          Use This Model
-        </button>
+    {% set display_model = namespace(name='', key='', path='') %}
+      {% for result in model_results %}
+        {% if selected_key == result.model_key %}
+          {% set display_model.name = result.model_name %}
+          {% set display_model.key = result.model_key %}
+          {% set display_model.path = result.artifact_path %}
+        {% endif %}
+      {% endfor %}
+      {% if not display_model.name %}
+        {% for result in model_results %}
+          {% if result.recommended %}
+            {% set display_model.name = result.model_name %}
+            {% set display_model.key = result.model_key %}
+            {% set display_model.path = result.artifact_path %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+
+      <form id="selectModelForm" method="POST" action="/build-model/select-model" style="display:none;">
+        <input type="hidden" id="selectedModelKey" name="model_key" value="">
+        <input type="hidden" id="selectedArtifactPath" name="artifact_path" value="">
       </form>
-    </div>
+
+
   </div>
 
   <!-- Summary cards — from recommended model -->
@@ -231,6 +473,21 @@
 </div>
 {% endif %}
 
+<!--Model Config-->
+{% if target_confirmed and model_results %}
+<div id="card3-wrapper" style="margin-top:1.5rem;"></div>
+
+<div style="margin-top:1.5rem; padding:1.2rem 1.5rem; background:#fffbeb; border:1px solid #fde68a; border-radius:12px; display:flex; align-items:center; justify-content:space-between;">
+  <div>
+    <div style="font-weight:700; font-size:.95rem; color:#1a1a2e; margin-bottom:.25rem;">Ready for the next step?</div>
+    <div style="font-size:.85rem; color:#6b7280;">Your model is ready. Let's test it with different scenarios.</div>
+  </div>
+  <a href="/test-scenarios" style="display:flex; align-items:center; gap:.5rem; background:var(--orange); color:white; padding:.7rem 1.3rem; border-radius:10px; font-size:.88rem; font-weight:600; text-decoration:none; white-space:nowrap;">
+    Go to Test Scenarios
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+  </a>
+</div>
+{% endif %}
 
 {% block extra_scripts %}
 <script>

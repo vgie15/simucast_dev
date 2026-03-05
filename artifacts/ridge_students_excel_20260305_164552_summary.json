@@ -1,0 +1,26 @@
+{
+  "model_id": "ridge_students_excel_20260305_164552",
+  "model_name": "Ridge Regression",
+  "model_key": "ridge_regression",
+  "predictors": [
+    "GPA"
+  ],
+  "feature_names_out": [
+    "GPA"
+  ],
+  "target": "Graduation Year",
+  "metrics": {
+    "holdout_r2": -0.0528,
+    "holdout_rmse": 2.1399,
+    "holdout_mae": 1.8735,
+    "train_r2": 0.0006,
+    "train_rmse": 1.9704,
+    "train_mae": 1.6609,
+    "n_train": 160,
+    "n_test": 40,
+    "n_predictors": 1,
+    "ridge_alpha": 1.0,
+    "test_size": 0.2
+  },
+  "trained_at": "2026-03-05T16:45:52.197548"
+}

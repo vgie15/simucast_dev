@@ -1,0 +1,33 @@
+{
+  "model_id": "ridge_students_20260302_005929",
+  "model_name": "Ridge Regression",
+  "model_key": "ridge_regression",
+  "predictors": [
+    "Age",
+    "Department",
+    "GPA"
+  ],
+  "feature_names_out": [
+    "Age",
+    "GPA",
+    "Department_Biology",
+    "Department_Chemistry",
+    "Department_Computer Science",
+    "Department_Mathematics",
+    "Department_Physics"
+  ],
+  "target": "GraduationYear",
+  "metrics": {
+    "holdout_r2": -0.0666,
+    "holdout_rmse": 2.1539,
+    "holdout_mae": 1.9101,
+    "train_r2": 0.0239,
+    "train_rmse": 1.9473,
+    "train_mae": 1.6439,
+    "n_train": 160,
+    "n_test": 40,
+    "n_predictors": 3,
+    "ridge_alpha": 1.0
+  },
+  "trained_at": "2026-03-02T00:59:29.829028"
+}

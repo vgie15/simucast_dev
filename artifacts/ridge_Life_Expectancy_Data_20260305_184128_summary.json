@@ -1,0 +1,51 @@
+{
+  "model_id": "ridge_Life_Expectancy_Data_20260305_184128",
+  "model_name": "Ridge Regression",
+  "model_key": "ridge_regression",
+  "predictors": [
+    "Status",
+    "Adult Mortality",
+    "infant deaths",
+    " BMI ",
+    "under-five deaths ",
+    "Polio",
+    "Diphtheria ",
+    " HIV/AIDS",
+    "GDP",
+    " thinness  1-19 years",
+    " thinness 5-9 years",
+    "Income composition of resources",
+    "Schooling"
+  ],
+  "feature_names_out": [
+    "Adult Mortality",
+    "infant deaths",
+    " BMI ",
+    "under-five deaths ",
+    "Polio",
+    "Diphtheria ",
+    " HIV/AIDS",
+    "GDP",
+    " thinness  1-19 years",
+    " thinness 5-9 years",
+    "Income composition of resources",
+    "Schooling",
+    "Status_Developed",
+    "Status_Developing"
+  ],
+  "target": "Life expectancy ",
+  "metrics": {
+    "holdout_r2": 0.8213,
+    "holdout_rmse": 3.9315,
+    "holdout_mae": 2.8981,
+    "train_r2": 0.817,
+    "train_rmse": 4.0967,
+    "train_mae": 3.0532,
+    "n_train": 2342,
+    "n_test": 586,
+    "n_predictors": 13,
+    "ridge_alpha": 1.0,
+    "test_size": 0.2
+  },
+  "trained_at": "2026-03-05T18:41:28.614201"
+}

@@ -196,7 +196,9 @@
         {% for row in preview_data %}
         <tr style="border-bottom:1px solid #f0f0f0;">
           {% for col in preview_columns %}
-          <td style="padding:.85rem 1.2rem; color:#1a1a2e; white-space:nowrap;">{{ row[col] }}</td>
+          <td style="padding:.85rem 1.2rem; color:#1a1a2e; white-space:nowrap;">
+            {{ row.get(col, '') }}
+          </td>
           {% endfor %}
         </tr>
         {% endfor %}
@@ -296,7 +298,8 @@
           </label>
           -->
 
-          <button type="submit" class="btn-action" style="background:#f59e0b; margin-top:0;">
+          <button type="submit" class="btn-action" style="background:#f59e0b; margin-top:0; font-size:.88rem; padding:.75rem;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
               Apply Selected Fix
           </button>
         </form>

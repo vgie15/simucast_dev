@@ -1,0 +1,37 @@
+{
+  "model_id": "rf_students_20260303_101110",
+  "model_name": "Random Forest Regressor",
+  "model_key": "random_forest_regressor",
+  "predictors": [
+    "Age",
+    "Department",
+    "GraduationYear"
+  ],
+  "feature_names_out": [
+    "Age",
+    "GraduationYear",
+    "Department_Biology",
+    "Department_Chemistry",
+    "Department_Computer Science",
+    "Department_Mathematics",
+    "Department_Physics"
+  ],
+  "target": "GPA",
+  "metrics": {
+    "holdout_r2": -0.4144,
+    "holdout_rmse": 0.6669,
+    "holdout_mae": 0.5458,
+    "train_r2": 0.7367,
+    "train_rmse": 0.3065,
+    "train_mae": 0.2478,
+    "n_train": 231,
+    "n_test": 58,
+    "n_predictors": 3,
+    "n_features_out": 7,
+    "rf_n_estimators": 300,
+    "rf_max_depth": null,
+    "rf_min_samples_leaf": 1,
+    "test_size": 0.2
+  },
+  "trained_at": "2026-03-03T10:11:10.933708"
+}

@@ -1,7 +1,6 @@
 import pandas as pd
 
-def analyze_data_quality(filepath):
-    df = pd.read_csv(filepath) if filepath.endswith('.csv') else pd.read_excel(filepath)
+def analyze_data_quality(df):
     total_rows = len(df)
 
     # Missing Values

@@ -1,0 +1,29 @@
+{
+  "model_id": "rf_students_excel_20260305_164553",
+  "model_name": "Random Forest Regressor",
+  "model_key": "random_forest_regressor",
+  "predictors": [
+    "GPA"
+  ],
+  "feature_names_out": [
+    "GPA"
+  ],
+  "target": "Graduation Year",
+  "metrics": {
+    "holdout_r2": -0.1436,
+    "holdout_rmse": 2.2303,
+    "holdout_mae": 1.8818,
+    "train_r2": 0.6155,
+    "train_rmse": 1.2222,
+    "train_mae": 0.9751,
+    "n_train": 160,
+    "n_test": 40,
+    "n_predictors": 1,
+    "n_features_out": 1,
+    "rf_n_estimators": 300,
+    "rf_max_depth": null,
+    "rf_min_samples_leaf": 1,
+    "test_size": 0.2
+  },
+  "trained_at": "2026-03-05T16:45:53.005675"
+}

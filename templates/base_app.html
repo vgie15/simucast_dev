@@ -17,20 +17,15 @@
 <aside class="sidebar">
 
   <!-- Logo -->
-  <div class="sidebar-logo">
+  <a href="/" style="text-decoration:none; color:inherit;"><div class="sidebar-logo">
     <div class="sidebar-logo-icon">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-        <rect x="3" y="3" width="8" height="8" rx="2" fill="white"/>
-        <rect x="13" y="3" width="8" height="8" rx="2" fill="white" opacity=".6"/>
-        <rect x="3" y="13" width="8" height="8" rx="2" fill="white" opacity=".6"/>
-        <rect x="13" y="13" width="8" height="8" rx="2" fill="white" opacity=".4"/>
-      </svg>
+      <img src="{{ url_for('static', filename='logo.svg') }}" alt="SimuCast" width="75" height="75" style="padding-top:15px;">
     </div>
     <div>
       <div class="sidebar-logo-name">SimuCast</div>
       <div class="sidebar-logo-sub">Predictive Analytics</div>
     </div>
-  </div>
+  </div></a>
 
   <!-- Auth buttons -->
   <div class="sidebar-auth">

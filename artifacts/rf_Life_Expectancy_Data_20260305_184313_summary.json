@@ -1,0 +1,31 @@
+{
+  "model_id": "rf_Life_Expectancy_Data_20260305_184313",
+  "model_name": "Random Forest Regressor",
+  "model_key": "random_forest_regressor",
+  "predictors": [
+    "Year",
+    "Population"
+  ],
+  "feature_names_out": [
+    "Year",
+    "Population"
+  ],
+  "target": "Life expectancy ",
+  "metrics": {
+    "holdout_r2": -0.2686,
+    "holdout_rmse": 10.4752,
+    "holdout_mae": 8.377,
+    "train_r2": 0.7035,
+    "train_rmse": 5.2139,
+    "train_mae": 3.9345,
+    "n_train": 2342,
+    "n_test": 586,
+    "n_predictors": 2,
+    "n_features_out": 2,
+    "rf_n_estimators": 300,
+    "rf_max_depth": null,
+    "rf_min_samples_leaf": 1,
+    "test_size": 0.2
+  },
+  "trained_at": "2026-03-05T18:43:13.880473"
+}
